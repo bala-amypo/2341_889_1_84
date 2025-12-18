@@ -1,8 +1,9 @@
-package com.example.demo.service;
+package com.example.demo.serviceimpl;
 
 import com.example.demo.exception.EntityNotFoundException;
 import com.example.demo.model.ServicePart;
 import com.example.demo.repository.ServicePartRepository;
+import com.example.demo.service.ServicePartService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,7 +19,7 @@ public class ServicePartServiceImpl implements ServicePartService {
 
     @Override
     public ServicePart createPart(ServicePart part) {
-        if (part.getQuantity() == null || part.getQuantity() <= 0) {
+        if (part.getQuantity() <= 0) {
             throw new IllegalArgumentException("Quantity must be greater than 0");
         }
         return repository.save(part);

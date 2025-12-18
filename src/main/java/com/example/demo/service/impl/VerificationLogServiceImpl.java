@@ -1,5 +1,6 @@
-package com.example.demo.service.impl;
+package com.example.demo.serviceimpl;
 
+import com.example.demo.exception.EntityNotFoundException;
 import com.example.demo.model.VerificationLog;
 import com.example.demo.repository.VerificationLogRepository;
 import com.example.demo.service.VerificationLogService;
@@ -24,11 +25,11 @@ public class VerificationLogServiceImpl implements VerificationLogService {
     @Override
     public VerificationLog getLogById(Long id) {
         return repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Verification log not found with id: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("Log not found"));
     }
 
     @Override
-    public List<VerificationLog> getLogsByEntry(Long entryId) {
+    public List<VerificationLog> getLogsForEntry(Long entryId) {
         return repository.findByServiceEntryId(entryId);
     }
 }
