@@ -18,29 +18,27 @@ public class GarageController {
     }
 
     @PostMapping
-    public Garage create(@Valid @RequestBody Garage garage) {
+    public Garage createGarage(@Valid @RequestBody Garage garage) {
         return service.createGarage(garage);
     }
 
     @PutMapping("/{id}")
-    public Garage update(
-            @PathVariable Long id,
-            @Valid @RequestBody Garage garage) {
+    public Garage updateGarage(@PathVariable Long id, @Valid @RequestBody Garage garage) {
         return service.updateGarage(id, garage);
     }
 
     @GetMapping("/{id}")
-    public Garage getById(@PathVariable Long id) {
+    public Garage getGarageById(@PathVariable Long id) {
         return service.getGarageById(id);
     }
 
     @GetMapping
-    public List<Garage> getAll() {
+    public List<Garage> getAllGarages() {
         return service.getAllGarages();
     }
 
     @PutMapping("/{id}/deactivate")
-    public Garage deactivate(@PathVariable Long id) {
-        return service.deactivateGarage(id);
+    public void deactivateGarage(@PathVariable Long id) {
+        service.deactivateGarage(id);  // return type is void
     }
 }

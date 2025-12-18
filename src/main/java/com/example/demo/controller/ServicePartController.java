@@ -18,17 +18,17 @@ public class ServicePartController {
     }
 
     @PostMapping
-    public ServicePart addPart(@Valid @RequestBody ServicePart part) {
-        return service.addPart(part);
+    public ServicePart createServicePart(@Valid @RequestBody ServicePart part) {
+        return service.createServicePart(part); // Ensure service method exists
     }
 
     @GetMapping("/{id}")
-    public ServicePart getById(@PathVariable Long id) {
-        return service.getPartById(id);
+    public ServicePart getServicePartById(@PathVariable Long id) {
+        return service.getServicePartById(id); // Ensure service method exists
     }
 
     @GetMapping("/entry/{entryId}")
-    public List<ServicePart> getByEntry(@PathVariable Long entryId) {
-        return service.getPartsByEntry(entryId);
+    public List<ServicePart> getPartsByEntry(@PathVariable Long entryId) {
+        return service.getPartsByEntry(entryId); // Ensure service method exists
     }
 }
