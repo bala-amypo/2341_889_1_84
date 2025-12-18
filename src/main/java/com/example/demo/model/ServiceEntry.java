@@ -14,7 +14,7 @@ public class ServiceEntry{
     @joinColumn(name = "vehicle_id")
     private Vehicle vehicle;
     @manytoOne(optional = false)
-    @joinColumn(name = "garge_id")
+    @JoinColumn(name = "garge_id")
     private Gargage gargage;
     @Column(nullable=false)
     private String serviceType;
