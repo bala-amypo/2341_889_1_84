@@ -1,11 +1,8 @@
 package com.example.demo.service;
 
-import com.example.demo.model.ServicePart;
-import java.util.List;
+import com.example.demo.model.User;
 
-public interface ServicePartService {
-    ServicePart createPart(ServicePart part);
-    ServicePart getPartById(Long id);
-    List<ServicePart> getPartsForEntry(Long entryId);
+public interface AuthService {
+    User register(User user);
+    String login(String email, String password);
 }
-

@@ -1,44 +1,44 @@
 package com.example.demo.controller;
 
-import com.example.demo.model.Garage;
-import com.example.demo.service.GarageService;
+import com.example.demo.model.Vehicle;
+import com.example.demo.service.VehicleService;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/garages")
-public class GarageController {
+@RequestMapping("/api/vehicles")
+public class VehicleController {
 
-    private final GarageService service;
+    private final VehicleService service;
 
-    public GarageController(GarageService service) {
+    public VehicleController(VehicleService service) {
         this.service = service;
     }
 
     @PostMapping
-    public Garage create(@Valid @RequestBody Garage garage) {
-        return service.createGarage(garage);
-    }
-
-    @PutMapping("/{id}")
-    public Garage update(@PathVariable Long id, @Valid @RequestBody Garage garage) {
-        return service.updateGarage(id, garage);
+    public Vehicle registerVehicle(@Valid @RequestBody Vehicle vehicle) {
+        return service.createVehicle(vehicle);
     }
 
     @GetMapping("/{id}")
-    public Garage getById(@PathVariable Long id) {
-        return service.getGarageById(id);
+    public Vehicle getById(@PathVariable Long id) {
+        return service.getVehicleById(id);
     }
 
-    @GetMapping
-    public List<Garage> getAll() {
-        return service.getAllGarages();
+    @GetMapping("/vin/{vin}")
+    public Vehicle getByVin(@PathVariable String vin) {
+        return service.getVehicleByVin(vin);
+    }
+
+    @GetMapping("/owner/{ownerId}")
+    public List<Vehicle> getByOwner(@PathVariable Long ownerId) {
+        return service.getVehiclesByOwner(ownerId);
     }
 
     @PutMapping("/{id}/deactivate")
-    public Garage deactivate(@PathVariable Long id) {
-        return service.deactivateGarage(id);
+    public Vehicle deactivate(@PathVariable Long id) {
+        return service.deactivateVehicle(id);
     }
 }
