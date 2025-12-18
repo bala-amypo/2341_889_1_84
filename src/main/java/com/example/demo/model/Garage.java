@@ -1,12 +1,6 @@
 package com.example.demo.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import jakarta.persistence.UniqueConstraint;
+import jakarta.persistence.*;
 
 @Entity
 @Table(
@@ -14,7 +8,6 @@ import jakarta.persistence.UniqueConstraint;
     uniqueConstraints = @UniqueConstraint(columnNames = "garageName")
 )
 public class Garage {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -28,6 +21,8 @@ public class Garage {
     @Column(nullable = false)
     private Boolean active;
 
+    public Garage() {}
+
     public Garage(Long id, String garageName, String address, String contactNumber, Boolean active) {
         this.id = id;
         this.garageName = garageName;
@@ -36,46 +31,35 @@ public class Garage {
         this.active = active;
     }
 
-    public Garage() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getGarageName() {
-        return garageName;
-    }
-
+    // Getters and setters...
+    public Long getId() { 
+        return id; 
+        }
+    public void setId(Long id) { 
+        this.id = id; 
+        }
+    public String getGarageName() { 
+        return garageName; 
+        }
     public void setGarageName(String garageName) {
-        this.garageName = garageName;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
+     this.garageName = garageName;
+      }
+    public String getAddress() { 
+        return address; 
+        }
     public void setAddress(String address) {
-        this.address = address;
-    }
-
+         this.address = address; 
+         }
     public String getContactNumber() {
-        return contactNumber;
-    }
-
+         return contactNumber;
+          }
     public void setContactNumber(String contactNumber) {
-        this.contactNumber = contactNumber;
-    }
-
-    public Boolean getActive() {
+         this.contactNumber = contactNumber;
+          }
+    public Boolean getActive() { 
         return active;
-    }
-
-    public void setActive(Boolean active) {
-        this.active = active;
-    }
+         }
+    public void setActive(Boolean active) { 
+        this.active = active; 
+        }
 }

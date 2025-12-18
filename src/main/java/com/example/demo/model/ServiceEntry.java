@@ -7,7 +7,6 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "service_entries")
 public class ServiceEntry {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -39,8 +38,11 @@ public class ServiceEntry {
         this.recordedAt = LocalDateTime.now();
     }
 
-    public ServiceEntry(Long id, Vehicle vehicle, Garage garage, String serviceType, LocalDate serviceDate,
-                        int odometerReading, String description, LocalDateTime recordedAt) {
+    public ServiceEntry() {}
+
+    public ServiceEntry(Long id, Vehicle vehicle, Garage garage, String serviceType,
+                        LocalDate serviceDate, int odometerReading, String description,
+                        LocalDateTime recordedAt) {
         this.id = id;
         this.vehicle = vehicle;
         this.garage = garage;
@@ -51,70 +53,21 @@ public class ServiceEntry {
         this.recordedAt = recordedAt;
     }
 
-    public ServiceEntry() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Vehicle getVehicle() {
-        return vehicle;
-    }
-
-    public void setVehicle(Vehicle vehicle) {
-        this.vehicle = vehicle;
-    }
-
-    public Garage getGarage() {
-        return garage;
-    }
-
-    public void setGarage(Garage garage) {
-        this.garage = garage;
-    }
-
-    public String getServiceType() {
-        return serviceType;
-    }
-
-    public void setServiceType(String serviceType) {
-        this.serviceType = serviceType;
-    }
-
-    public LocalDate getServiceDate() {
-        return serviceDate;
-    }
-
-    public void setServiceDate(LocalDate serviceDate) {
-        this.serviceDate = serviceDate;
-    }
-
-    public int getOdometerReading() {
-        return odometerReading;
-    }
-
-    public void setOdometerReading(int odometerReading) {
-        this.odometerReading = odometerReading;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public LocalDateTime getRecordedAt() {
-        return recordedAt;
-    }
-
-    public void setRecordedAt(LocalDateTime recordedAt) {
-        this.recordedAt = recordedAt;
-    }
+    // Getters and setters
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+    public Vehicle getVehicle() { return vehicle; }
+    public void setVehicle(Vehicle vehicle) { this.vehicle = vehicle; }
+    public Garage getGarage() { return garage; }
+    public void setGarage(Garage garage) { this.garage = garage; }
+    public String getServiceType() { return serviceType; }
+    public void setServiceType(String serviceType) { this.serviceType = serviceType; }
+    public LocalDate getServiceDate() { return serviceDate; }
+    public void setServiceDate(LocalDate serviceDate) { this.serviceDate = serviceDate; }
+    public int getOdometerReading() { return odometerReading; }
+    public void setOdometerReading(int odometerReading) { this.odometerReading = odometerReading; }
+    public String getDescription() { return description; }
+    public void setDescription(String description) { this.description = description; }
+    public LocalDateTime getRecordedAt() { return recordedAt; }
+    public void setRecordedAt(LocalDateTime recordedAt) { this.recordedAt = recordedAt; }
 }
