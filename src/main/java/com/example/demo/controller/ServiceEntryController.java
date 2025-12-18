@@ -18,22 +18,22 @@ public class ServiceEntryController {
     }
 
     @PostMapping
-    public ServiceEntry createServiceEntry(@Valid @RequestBody ServiceEntry entry) {
-        return service.createServiceEntry(entry); // Make sure service method matches
+    public ServiceEntry create(@Valid @RequestBody ServiceEntry entry) {
+        return service.createServiceEntry(entry);
     }
 
     @GetMapping("/{id}")
-    public ServiceEntry getServiceEntryById(@PathVariable Long id) {
-        return service.getServiceEntryById(id); // Make sure service method matches
+    public ServiceEntry getById(@PathVariable Long id) {
+        return service.getServiceEntryById(id);
     }
 
     @GetMapping("/vehicle/{vehicleId}")
-    public List<ServiceEntry> getEntriesByVehicle(@PathVariable Long vehicleId) {
-        return service.getEntriesByVehicle(vehicleId); // Must return List<ServiceEntry>
+    public List<ServiceEntry> getByVehicle(@PathVariable Long vehicleId) {
+        return service.getEntriesForVehicle(vehicleId);
     }
 
     @GetMapping("/garage/{garageId}")
-    public List<ServiceEntry> getEntriesByGarage(@PathVariable Long garageId) {
-        return service.getEntriesByGarage(garageId); // Must return List<ServiceEntry>
+    public List<ServiceEntry> getByGarage(@PathVariable Long garageId) {
+        return service.getEntriesByGarage(garageId);
     }
 }

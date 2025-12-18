@@ -29,6 +29,6 @@ public class VerificationLogController {
 
     @GetMapping("/entry/{entryId}")
     public List<VerificationLog> getByEntry(@PathVariable Long entryId) {
-        return service.getLogsByEntry(entryId);
+        return service.getLogsForEntry(entryId);
     }
 }
