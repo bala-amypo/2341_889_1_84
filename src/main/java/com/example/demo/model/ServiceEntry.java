@@ -1,4 +1,4 @@
-package  com.example.demo.model;
+package com.example.demo.model;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
@@ -6,36 +6,44 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "service_entries")
-public class ServiceEntry{
+public class ServiceEntry {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @manytoOne(optional = false)
-    @joinColumn(name = "vehicle_id")
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "vehicle_id")
     private Vehicle vehicle;
-    @manytoOne(optional = false)
-    @JoinColumn(name = "garge_id")
-    private Gargage gargage;
-    @Column(nullable=false)
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "garage_id")
+    private Garage garage;
+
+    @Column(nullable = false)
     private String serviceType;
-    @Column(nullable=false)
+
+    @Column(nullable = false)
     private LocalDate serviceDate;
-    @Column(nullable=false)
+
+    @Column(nullable = false)
     private int odometerReading;
+
     private String description;
-    @Column(nullable=false, updatable = false)
+
+    @Column(nullable = false, updatable = false)
     private LocalDateTime recordedAt;
 
-    @Prepersist
-    protected void onCreate(){
+    @PrePersist
+    protected void onCreate() {
         this.recordedAt = LocalDateTime.now();
     }
 
-    public ServiceEntry(Long id, Vehicle vehicle, Gargage gargage, String serviceType, LocalDate serviceDate,
-            int odometerReading, String description, LocalDateTime recordedAt) {
+    public ServiceEntry(Long id, Vehicle vehicle, Garage garage, String serviceType, LocalDate serviceDate,
+                        int odometerReading, String description, LocalDateTime recordedAt) {
         this.id = id;
         this.vehicle = vehicle;
-        this.gargage = gargage;
+        this.garage = garage;
         this.serviceType = serviceType;
         this.serviceDate = serviceDate;
         this.odometerReading = odometerReading;
@@ -62,12 +70,12 @@ public class ServiceEntry{
         this.vehicle = vehicle;
     }
 
-    public Gargage getGargage() {
-        return gargage;
+    public Garage getGarage() {
+        return garage;
     }
 
-    public void setGargage(Gargage gargage) {
-        this.gargage = gargage;
+    public void setGarage(Garage garage) {
+        this.garage = garage;
     }
 
     public String getServiceType() {
@@ -109,5 +117,4 @@ public class ServiceEntry{
     public void setRecordedAt(LocalDateTime recordedAt) {
         this.recordedAt = recordedAt;
     }
-    
 }
