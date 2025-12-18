@@ -8,5 +8,10 @@ import java.time.LocalDateTime;
 @Table(name = "service_entries")
 public class ServiceEntry{
     private Long id;
-    private 
+    private Vehicle vehicle;
+    private Gargage gargage;
+    private String serviceType;
+    private LocalDate serviceDate;
+    private int odometerReading;
+    
 }
