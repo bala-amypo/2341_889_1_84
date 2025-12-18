@@ -2,9 +2,12 @@
 
  import jakarta.persistence;
 
+@Entity
+@Table(
+    name="garage"
+)
  public class Gargage{
     @Id
-    @Table()
     private Long id;
     private String gargageName;
     private String address;
