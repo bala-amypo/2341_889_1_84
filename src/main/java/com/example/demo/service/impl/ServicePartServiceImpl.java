@@ -20,7 +20,7 @@ public class ServicePartServiceImpl implements ServicePartService {
     @Override
     public ServicePart createPart(ServicePart part) {
         if (part.getQuantity() <= 0) {
-            throw new IllegalArgumentException("Quantity must be greater than 0");
+            throw new IllegalArgumentException("Quantity must be greater than zero");
         }
         return repository.save(part);
     }
@@ -28,7 +28,7 @@ public class ServicePartServiceImpl implements ServicePartService {
     @Override
     public ServicePart getPartById(Long id) {
         return repository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Part not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Service part not found"));
     }
 
     @Override
