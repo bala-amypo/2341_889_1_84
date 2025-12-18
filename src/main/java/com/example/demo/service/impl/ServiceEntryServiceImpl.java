@@ -59,4 +59,3 @@ public class ServiceEntryServiceImpl implements ServiceEntryService {
                 .toList();
     }
 }
-

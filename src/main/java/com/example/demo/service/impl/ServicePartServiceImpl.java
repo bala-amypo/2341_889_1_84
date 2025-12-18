@@ -1,4 +1,4 @@
-package com.example.demo.serviceimpl;
+package com.example.demo.service.impl;
 
 import com.example.demo.exception.EntityNotFoundException;
 import com.example.demo.model.ServicePart;
@@ -28,7 +28,7 @@ public class ServicePartServiceImpl implements ServicePartService {
     @Override
     public ServicePart getPartById(Long id) {
         return repository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Service part not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Part not found"));
     }
 
     @Override

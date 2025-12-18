@@ -18,7 +18,7 @@ public class ServicePartController {
     }
 
     @PostMapping
-    public ServicePart createPart(@Valid @RequestBody ServicePart part) {
+    public ServicePart addPart(@Valid @RequestBody ServicePart part) {
         return service.createPart(part);
     }
 
