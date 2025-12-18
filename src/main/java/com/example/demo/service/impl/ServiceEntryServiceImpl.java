@@ -1,4 +1,4 @@
-package com.example.demo.serviceimpl;
+package com.example.demo.service.impl;
 
 import com.example.demo.exception.EntityNotFoundException;
 import com.example.demo.model.ServiceEntry;
@@ -23,8 +23,8 @@ public class ServiceEntryServiceImpl implements ServiceEntryService {
     public ServiceEntry createServiceEntry(ServiceEntry entry) {
         Vehicle vehicle = entry.getVehicle();
 
-        if (vehicle == null || !Boolean.TRUE.equals(vehicle.getActive())) {
-            throw new IllegalArgumentException("Vehicle must be active");
+        if (!Boolean.TRUE.equals(vehicle.getActive())) {
+            throw new IllegalArgumentException("Vehicle is not active");
         }
 
         if (entry.getServiceDate().isAfter(LocalDate.now())) {
@@ -34,7 +34,7 @@ public class ServiceEntryServiceImpl implements ServiceEntryService {
         ServiceEntry last = repository.findTopByVehicleOrderByOdometerReadingDesc(vehicle);
 
         if (last != null && entry.getOdometerReading() < last.getOdometerReading()) {
-            throw new IllegalArgumentException("Odometer reading cannot be less than last recorded reading");
+            throw new IllegalArgumentException("Odometer reading cannot be less than the previous entry");
         }
 
         return repository.save(entry);
@@ -55,7 +55,7 @@ public class ServiceEntryServiceImpl implements ServiceEntryService {
     public List<ServiceEntry> getEntriesByGarage(Long garageId) {
         return repository.findAll()
                 .stream()
-                .filter(e -> e.getGarage().getId().equals(garageId))
+                .filter(entry -> entry.getGarage().getId().equals(garageId))
                 .toList();
     }
 }
