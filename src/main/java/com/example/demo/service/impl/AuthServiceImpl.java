@@ -33,7 +33,6 @@ public class AuthServiceImpl implements AuthService {
             throw new RuntimeException("Invalid email or password");
         }
 
-        // JWT token generation will go here later
         return "LOGIN_SUCCESS";
     }
 }
