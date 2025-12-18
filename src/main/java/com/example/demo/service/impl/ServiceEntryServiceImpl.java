@@ -4,6 +4,7 @@ import com.example.demo.exception.EntityNotFoundException;
 import com.example.demo.model.ServiceEntry;
 import com.example.demo.model.Vehicle;
 import com.example.demo.repository.ServiceEntryRepository;
+import com.example.demo.service.ServiceEntryService;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -20,7 +21,6 @@ public class ServiceEntryServiceImpl implements ServiceEntryService {
 
     @Override
     public ServiceEntry createServiceEntry(ServiceEntry entry) {
-
         Vehicle vehicle = entry.getVehicle();
 
         if (vehicle == null || !Boolean.TRUE.equals(vehicle.getActive())) {
