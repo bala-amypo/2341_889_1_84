@@ -1,21 +1,12 @@
 
-GarageRepository extends JpaRepository<Garage, Long> {
- Optional<Garage> findByGarageName(String garageName);
-}
+package com.example.demo.repository;
 
-ServiceEntryRepository extends JpaRepository<ServiceEntry, Long> {
- ServiceEntry findTopByVehicleOrderByOdometerReadingDesc(Vehicle vehicle);
- List<ServiceEntry> findByVehicleId(Long vehicleId);
-}
+import com.example.demo.model.Garage;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-ServicePartRepository extends JpaRepository<ServicePart, Long> {
- List<ServicePart> findByServiceEntryId(Long entryId);
-}
+import java.util.Optional;
 
-VerificationLogRepository extends JpaRepository<VerificationLog, Long> {
- List<VerificationLog> findByServiceEntryId(Long entryId);
-}
+public interface GarageRepository extends JpaRepository<Garage, Long> {
 
-UserRepository extends JpaRepository<User, Long> {
- Optional<User> findByEmail(String email);
+    Optional<Garage> findByGarageName(String garageName);
 }
