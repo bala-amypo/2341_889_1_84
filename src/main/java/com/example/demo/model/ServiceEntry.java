@@ -13,5 +13,6 @@ public class ServiceEntry{
     private String serviceType;
     private LocalDate serviceDate;
     private int odometerReading;
-    
+    private String description;
+    private LocalDateTime recorded
 }
