@@ -18,31 +18,27 @@ public class VehicleController {
     }
 
     @PostMapping
-    public Vehicle create(@Valid @RequestBody Vehicle vehicle) {
+    public Vehicle registerVehicle(@Valid @RequestBody Vehicle vehicle) {
         return service.createVehicle(vehicle);
     }
-
 
     @GetMapping("/{id}")
     public Vehicle getById(@PathVariable Long id) {
         return service.getVehicleById(id);
     }
 
-
-    @GetMapping
-    public List<Vehicle> getAll() {
-        return service.getAllVehicles();
+    @GetMapping("/vin/{vin}")
+    public Vehicle getByVin(@PathVariable String vin) {
+        return service.getVehicleByVin(vin);
     }
 
-    @PutMapping("/{id}")
-    public Vehicle update(
-            @PathVariable Long id,
-            @Valid @RequestBody Vehicle vehicle) {
-        return service.updateVehicle(id, vehicle);
+    @GetMapping("/owner/{ownerId}")
+    public List<Vehicle> getByOwner(@PathVariable Long ownerId) {
+        return service.getVehiclesByOwner(ownerId);
     }
 
-    @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
-        service.deleteVehicle(id);
+    @PutMapping("/{id}/deactivate")
+    public Vehicle deactivate(@PathVariable Long id) {
+        return service.deactivateVehicle(id);
     }
 }
