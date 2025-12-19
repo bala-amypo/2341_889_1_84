@@ -25,23 +25,26 @@ public class ServiceEntryServiceImpl implements ServiceEntryService {
 
     @Override
     public ServiceEntry createServiceEntry(ServiceEntry entry) {
+        if (entry.getVehicle() == null || entry.getVehicle().getId() == null) {
+            throw new IllegalArgumentException("Vehicle information is required");
+        }
 
         Vehicle vehicle = vehicleRepository.findById(entry.getVehicle().getId())
                 .orElseThrow(() -> new EntityNotFoundException("Vehicle not found"));
 
-        if (!vehicle.getActive()) {
-            throw new IllegalArgumentException("active vehicles");
+        if (!Boolean.TRUE.equals(vehicle.getActive())) {
+            throw new IllegalArgumentException("Vehicle is not active");
         }
 
-        if (entry.getServiceDate().isAfter(LocalDate.now())) {
-            throw new IllegalArgumentException("future");
+        if (entry.getServiceDate() == null || entry.getServiceDate().isAfter(LocalDate.now())) {
+            throw new IllegalArgumentException("Service date cannot be in the future");
         }
 
-        ServiceEntry last = serviceEntryRepository
+        ServiceEntry lastEntry = serviceEntryRepository
                 .findTopByVehicleOrderByOdometerReadingDesc(vehicle);
 
-        if (last != null && entry.getOdometerReading() < last.getOdometerReading()) {
-            throw new IllegalArgumentException(">=");
+        if (lastEntry != null && entry.getOdometerReading() < lastEntry.getOdometerReading()) {
+            throw new IllegalArgumentException("Odometer reading cannot be less than the previous entry");
         }
 
         return serviceEntryRepository.save(entry);
@@ -60,9 +63,10 @@ public class ServiceEntryServiceImpl implements ServiceEntryService {
 
     @Override
     public List<ServiceEntry> getEntriesByGarage(Long garageId) {
+        // Ideally, create a repository method: findByGarageId(garageId)
         return serviceEntryRepository.findAll()
                 .stream()
-                .filter(e -> e.getGarage().getId().equals(garageId))
+                .filter(entry -> entry.getGarage() != null && entry.getGarage().getId().equals(garageId))
                 .toList();
     }
 }
