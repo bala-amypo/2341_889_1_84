@@ -16,19 +16,16 @@ public class ServicePartController {
         this.servicePartService = servicePartService;
     }
 
-    // POST /api/service-parts
     @PostMapping
     public ServicePart createPart(@RequestBody ServicePart part) {
         return servicePartService.createPart(part);
     }
 
-    // GET /api/service-parts/{id}
     @GetMapping("/{id}")
     public ServicePart getById(@PathVariable Long id) {
         return servicePartService.getPartById(id);
     }
 
-    // GET /api/service-parts/entry/{entryId}
     @GetMapping("/entry/{entryId}")
     public List<ServicePart> getByEntry(@PathVariable Long entryId) {
         return servicePartService.getPartsForEntry(entryId);
