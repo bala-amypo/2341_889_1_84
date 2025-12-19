@@ -24,9 +24,8 @@ public class ServicePartServiceImpl implements ServicePartService {
 
     @Override
     public ServicePart createPart(Long entryId, ServicePart part) {
-        // Ensure the service entry exists
         ServiceEntry entry = entryRepository.findById(entryId)
-                .orElseThrow(() -> new EntityNotFoundException("Service entry not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Service entry not found"));
 
         if (part.getQuantity() <= 0) {
             throw new IllegalArgumentException("Quantity must be greater than zero");
@@ -39,13 +38,13 @@ public class ServicePartServiceImpl implements ServicePartService {
     @Override
     public ServicePart getPartById(Long id) {
         return partRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Part not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Service part not found"));
     }
 
     @Override
     public List<ServicePart> getPartsForEntry(Long entryId) {
         if (!entryRepository.existsById(entryId)) {
-            throw new EntityNotFoundException("Service entry not found");
+            throw new ResourceNotFoundException("Service entry not found");
         }
         return partRepository.findByServiceEntryId(entryId);
     }

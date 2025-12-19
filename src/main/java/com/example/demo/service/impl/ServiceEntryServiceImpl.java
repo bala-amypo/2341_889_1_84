@@ -1,6 +1,6 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.exception.EntityNotFoundException;
+import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.model.ServiceEntry;
 import com.example.demo.model.Vehicle;
 import com.example.demo.repository.ServiceEntryRepository;
@@ -30,7 +30,7 @@ public class ServiceEntryServiceImpl implements ServiceEntryService {
         }
 
         Vehicle vehicle = vehicleRepository.findById(entry.getVehicle().getId())
-                .orElseThrow(() -> new EntityNotFoundException("Vehicle not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Vehicle not found"));
 
         if (!Boolean.TRUE.equals(vehicle.getActive())) {
             throw new IllegalArgumentException("Vehicle is not active");
@@ -53,7 +53,7 @@ public class ServiceEntryServiceImpl implements ServiceEntryService {
     @Override
     public ServiceEntry getServiceEntryById(Long id) {
         return serviceEntryRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Service entry not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Service entry not found"));
     }
 
     @Override
@@ -63,7 +63,6 @@ public class ServiceEntryServiceImpl implements ServiceEntryService {
 
     @Override
     public List<ServiceEntry> getEntriesByGarage(Long garageId) {
-        // Ideally, create a repository method: findByGarageId(garageId)
         return serviceEntryRepository.findAll()
                 .stream()
                 .filter(entry -> entry.getGarage() != null && entry.getGarage().getId().equals(garageId))
