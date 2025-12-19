@@ -20,7 +20,7 @@ public class ServicePartServiceImpl implements ServicePartService {
     @Override
     public ServicePart createPart(ServicePart part) {
         if (part.getQuantity() <= 0) {
-            throw new IllegalArgumentException("Quantity must be greater than zero");
+            throw new IllegalArgumentException("Quantity");
         }
         return repository.save(part);
     }

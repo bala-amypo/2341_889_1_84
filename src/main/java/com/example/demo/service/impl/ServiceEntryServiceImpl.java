@@ -4,6 +4,7 @@ import com.example.demo.exception.EntityNotFoundException;
 import com.example.demo.model.ServiceEntry;
 import com.example.demo.model.Vehicle;
 import com.example.demo.repository.ServiceEntryRepository;
+import com.example.demo.repository.VehicleRepository;
 import com.example.demo.service.ServiceEntryService;
 import org.springframework.stereotype.Service;
 
@@ -13,49 +14,55 @@ import java.util.List;
 @Service
 public class ServiceEntryServiceImpl implements ServiceEntryService {
 
-    private final ServiceEntryRepository repository;
+    private final ServiceEntryRepository serviceEntryRepository;
+    private final VehicleRepository vehicleRepository;
 
-    public ServiceEntryServiceImpl(ServiceEntryRepository repository) {
-        this.repository = repository;
+    public ServiceEntryServiceImpl(ServiceEntryRepository serviceEntryRepository,
+                                   VehicleRepository vehicleRepository) {
+        this.serviceEntryRepository = serviceEntryRepository;
+        this.vehicleRepository = vehicleRepository;
     }
 
     @Override
     public ServiceEntry createServiceEntry(ServiceEntry entry) {
-        Vehicle vehicle = entry.getVehicle();
 
-        if (!Boolean.TRUE.equals(vehicle.getActive())) {
-            throw new IllegalArgumentException("Vehicle is not active");
+        Vehicle vehicle = vehicleRepository.findById(entry.getVehicle().getId())
+                .orElseThrow(() -> new EntityNotFoundException("Vehicle not found"));
+
+        if (!vehicle.getActive()) {
+            throw new IllegalArgumentException("active vehicles");
         }
 
         if (entry.getServiceDate().isAfter(LocalDate.now())) {
-            throw new IllegalArgumentException("Service date cannot be in the future");
+            throw new IllegalArgumentException("future");
         }
 
-        ServiceEntry last = repository.findTopByVehicleOrderByOdometerReadingDesc(vehicle);
+        ServiceEntry last = serviceEntryRepository
+                .findTopByVehicleOrderByOdometerReadingDesc(vehicle);
 
         if (last != null && entry.getOdometerReading() < last.getOdometerReading()) {
-            throw new IllegalArgumentException("Odometer reading cannot be less than the previous entry");
+            throw new IllegalArgumentException(">=");
         }
 
-        return repository.save(entry);
+        return serviceEntryRepository.save(entry);
     }
 
     @Override
     public ServiceEntry getServiceEntryById(Long id) {
-        return repository.findById(id)
+        return serviceEntryRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Service entry not found"));
     }
 
     @Override
     public List<ServiceEntry> getEntriesForVehicle(Long vehicleId) {
-        return repository.findByVehicleId(vehicleId);
+        return serviceEntryRepository.findByVehicleId(vehicleId);
     }
 
     @Override
     public List<ServiceEntry> getEntriesByGarage(Long garageId) {
-        return repository.findAll()
+        return serviceEntryRepository.findAll()
                 .stream()
-                .filter(entry -> entry.getGarage().getId().equals(garageId))
+                .filter(e -> e.getGarage().getId().equals(garageId))
                 .toList();
     }
 }

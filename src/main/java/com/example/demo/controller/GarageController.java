@@ -2,7 +2,6 @@ package com.example.demo.controller;
 
 import com.example.demo.model.Garage;
 import com.example.demo.service.GarageService;
-import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,34 +10,39 @@ import java.util.List;
 @RequestMapping("/api/garages")
 public class GarageController {
 
-    private final GarageService service;
+    private final GarageService garageService;
 
-    public GarageController(GarageService service) {
-        this.service = service;
+    public GarageController(GarageService garageService) {
+        this.garageService = garageService;
     }
 
+    // POST /api/garages
     @PostMapping
-    public Garage createGarage(@Valid @RequestBody Garage garage) {
-        return service.createGarage(garage);
+    public Garage createGarage(@RequestBody Garage garage) {
+        return garageService.createGarage(garage);
     }
 
+    // PUT /api/garages/{id}
     @PutMapping("/{id}")
-    public Garage updateGarage(@PathVariable Long id, @Valid @RequestBody Garage garage) {
-        return service.updateGarage(id, garage);
+    public Garage updateGarage(@PathVariable Long id, @RequestBody Garage garage) {
+        return garageService.updateGarage(id, garage);
     }
 
+    // GET /api/garages/{id}
     @GetMapping("/{id}")
-    public Garage getGarageById(@PathVariable Long id) {
-        return service.getGarageById(id);
+    public Garage getGarage(@PathVariable Long id) {
+        return garageService.getGarageById(id);
     }
 
+    // GET /api/garages
     @GetMapping
-    public List<Garage> getAllGarages() {
-        return service.getAllGarages();
+    public List<Garage> getAll() {
+        return garageService.getAllGarages();
     }
 
+    // PUT /api/garages/{id}/deactivate
     @PutMapping("/{id}/deactivate")
-    public void deactivateGarage(@PathVariable Long id) {
-        service.deactivateGarage(id);  // return type is void
+    public void deactivate(@PathVariable Long id) {
+        garageService.deactivateGarage(id);
     }
 }

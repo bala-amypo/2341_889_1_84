@@ -2,7 +2,6 @@ package com.example.demo.controller;
 
 import com.example.demo.model.ServiceEntry;
 import com.example.demo.service.ServiceEntryService;
-import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,29 +10,33 @@ import java.util.List;
 @RequestMapping("/api/service-entries")
 public class ServiceEntryController {
 
-    private final ServiceEntryService service;
+    private final ServiceEntryService serviceEntryService;
 
-    public ServiceEntryController(ServiceEntryService service) {
-        this.service = service;
+    public ServiceEntryController(ServiceEntryService serviceEntryService) {
+        this.serviceEntryService = serviceEntryService;
     }
 
+    // POST /api/service-entries
     @PostMapping
-    public ServiceEntry create(@Valid @RequestBody ServiceEntry entry) {
-        return service.createServiceEntry(entry);
+    public ServiceEntry createEntry(@RequestBody ServiceEntry entry) {
+        return serviceEntryService.createServiceEntry(entry);
     }
 
+    // GET /api/service-entries/{id}
     @GetMapping("/{id}")
     public ServiceEntry getById(@PathVariable Long id) {
-        return service.getServiceEntryById(id);
+        return serviceEntryService.getServiceEntryById(id);
     }
 
+    // GET /api/service-entries/vehicle/{vehicleId}
     @GetMapping("/vehicle/{vehicleId}")
     public List<ServiceEntry> getByVehicle(@PathVariable Long vehicleId) {
-        return service.getEntriesForVehicle(vehicleId);
+        return serviceEntryService.getEntriesForVehicle(vehicleId);
     }
 
+    // GET /api/service-entries/garage/{garageId}
     @GetMapping("/garage/{garageId}")
     public List<ServiceEntry> getByGarage(@PathVariable Long garageId) {
-        return service.getEntriesByGarage(garageId);
+        return serviceEntryService.getEntriesByGarage(garageId);
     }
 }

@@ -2,7 +2,6 @@ package com.example.demo.controller;
 
 import com.example.demo.model.ServicePart;
 import com.example.demo.service.ServicePartService;
-import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,24 +10,27 @@ import java.util.List;
 @RequestMapping("/api/service-parts")
 public class ServicePartController {
 
-    private final ServicePartService service;
+    private final ServicePartService servicePartService;
 
-    public ServicePartController(ServicePartService service) {
-        this.service = service;
+    public ServicePartController(ServicePartService servicePartService) {
+        this.servicePartService = servicePartService;
     }
 
+    // POST /api/service-parts
     @PostMapping
-    public ServicePart addPart(@Valid @RequestBody ServicePart part) {
-        return service.createPart(part);
+    public ServicePart createPart(@RequestBody ServicePart part) {
+        return servicePartService.createPart(part);
     }
 
+    // GET /api/service-parts/{id}
     @GetMapping("/{id}")
     public ServicePart getById(@PathVariable Long id) {
-        return service.getPartById(id);
+        return servicePartService.getPartById(id);
     }
 
+    // GET /api/service-parts/entry/{entryId}
     @GetMapping("/entry/{entryId}")
     public List<ServicePart> getByEntry(@PathVariable Long entryId) {
-        return service.getPartsForEntry(entryId);
+        return servicePartService.getPartsForEntry(entryId);
     }
 }
