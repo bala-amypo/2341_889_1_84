@@ -16,11 +16,13 @@ public class GarageController {
         this.garageService = garageService;
     }
 
+    // POST /api/garages
     @PostMapping
     public Garage createGarage(@RequestBody Garage garage) {
         return garageService.createGarage(garage);
     }
 
+    // PUT /api/garages/{id}
     @PutMapping("/{id}")
     public Garage updateGarage(@PathVariable Long id, @RequestBody Garage garage) {
         return garageService.updateGarage(id, garage);
