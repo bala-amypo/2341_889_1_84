@@ -17,9 +17,11 @@ public class OpenApiConfig {
     public OpenAPI customOpenAPI() {
 
         return new OpenAPI()
-                // Server configuration (kept exactly as yours)
+                // ✅ Correct proxy-based server
                 .servers(List.of(
-                        new Server().url("https://9343.pro604cr.amypo.ai/")
+                        new Server()
+                                .url("/proxy/9001")
+                                .description("Service Management API")
                 ))
 
                 // JWT Security Scheme
@@ -32,7 +34,6 @@ public class OpenApiConfig {
                         )
                 )
 
-                // Apply JWT globally
                 .addSecurityItem(
                         new SecurityRequirement().addList("bearerAuth")
                 );
