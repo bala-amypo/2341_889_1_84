@@ -22,8 +22,6 @@ public class Garage {
     @Column(nullable = false)
     private Boolean active = true;
 
-    // ===== Getters & Setters =====
-
     public Long getId() {
         return id;
     }
