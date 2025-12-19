@@ -30,8 +30,6 @@ public class Vehicle {
     @Column(nullable = false, updatable = false)
     private Instant createdAt = Instant.now();
 
-    // ===== Getters & Setters =====
-
     public Long getId() {
         return id;
     }

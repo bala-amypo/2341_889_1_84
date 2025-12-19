@@ -32,8 +32,6 @@ public class ServiceEntry {
     @Column(nullable = false, updatable = false)
     private Instant recordedAt = Instant.now();
 
-    // ===== Getters Only for Immutable Fields =====
-
     public Long getId() {
         return id;
     }

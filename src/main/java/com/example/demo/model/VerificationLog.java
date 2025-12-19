@@ -22,8 +22,6 @@ public class VerificationLog {
 
     private String notes;
 
-    // ===== Getters Only =====
-
     public Long getId() {
         return id;
     }

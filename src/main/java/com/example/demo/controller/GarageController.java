@@ -16,31 +16,27 @@ public class GarageController {
         this.garageService = garageService;
     }
 
-    // POST /api/garages
     @PostMapping
     public Garage createGarage(@RequestBody Garage garage) {
         return garageService.createGarage(garage);
     }
 
-    // PUT /api/garages/{id}
     @PutMapping("/{id}")
     public Garage updateGarage(@PathVariable Long id, @RequestBody Garage garage) {
         return garageService.updateGarage(id, garage);
     }
 
-    // GET /api/garages/{id}
+
     @GetMapping("/{id}")
     public Garage getGarage(@PathVariable Long id) {
         return garageService.getGarageById(id);
     }
 
-    // GET /api/garages
     @GetMapping
     public List<Garage> getAll() {
         return garageService.getAllGarages();
     }
 
-    // PUT /api/garages/{id}/deactivate
     @PutMapping("/{id}/deactivate")
     public void deactivate(@PathVariable Long id) {
         garageService.deactivateGarage(id);

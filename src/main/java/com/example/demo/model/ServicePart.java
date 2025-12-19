@@ -25,8 +25,6 @@ public class ServicePart {
     @Column(nullable = false)
     private Integer quantity;
 
-    // ===== Getters & Setters =====
-
     public Long getId() {
         return id;
     }
