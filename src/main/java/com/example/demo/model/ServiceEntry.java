@@ -1,22 +1,21 @@
 package com.example.demo.model;
 
 import jakarta.persistence.*;
+import java.time.Instant;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "service_entries")
 public class ServiceEntry {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "vehicle_id")
     private Vehicle vehicle;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "garage_id")
     private Garage garage;
 
     @Column(nullable = false)
@@ -26,48 +25,68 @@ public class ServiceEntry {
     private LocalDate serviceDate;
 
     @Column(nullable = false)
-    private int odometerReading;
+    private Integer odometerReading;
 
     private String description;
 
     @Column(nullable = false, updatable = false)
-    private LocalDateTime recordedAt;
+    private Instant recordedAt = Instant.now();
 
-    @PrePersist
-    protected void onCreate() {
-        this.recordedAt = LocalDateTime.now();
+    // ===== Getters Only for Immutable Fields =====
+
+    public Long getId() {
+        return id;
     }
 
-    public ServiceEntry() {}
+    public Vehicle getVehicle() {
+        return vehicle;
+    }
 
-    public ServiceEntry(Long id, Vehicle vehicle, Garage garage, String serviceType,
-                        LocalDate serviceDate, int odometerReading, String description,
-                        LocalDateTime recordedAt) {
-        this.id = id;
+    public void setVehicle(Vehicle vehicle) {
         this.vehicle = vehicle;
-        this.garage = garage;
-        this.serviceType = serviceType;
-        this.serviceDate = serviceDate;
-        this.odometerReading = odometerReading;
-        this.description = description;
-        this.recordedAt = recordedAt;
     }
 
-    // Getters and setters
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
-    public Vehicle getVehicle() { return vehicle; }
-    public void setVehicle(Vehicle vehicle) { this.vehicle = vehicle; }
-    public Garage getGarage() { return garage; }
-    public void setGarage(Garage garage) { this.garage = garage; }
-    public String getServiceType() { return serviceType; }
-    public void setServiceType(String serviceType) { this.serviceType = serviceType; }
-    public LocalDate getServiceDate() { return serviceDate; }
-    public void setServiceDate(LocalDate serviceDate) { this.serviceDate = serviceDate; }
-    public int getOdometerReading() { return odometerReading; }
-    public void setOdometerReading(int odometerReading) { this.odometerReading = odometerReading; }
-    public String getDescription() { return description; }
-    public void setDescription(String description) { this.description = description; }
-    public LocalDateTime getRecordedAt() { return recordedAt; }
-    public void setRecordedAt(LocalDateTime recordedAt) { this.recordedAt = recordedAt; }
+    public Garage getGarage() {
+        return garage;
+    }
+
+    public void setGarage(Garage garage) {
+        this.garage = garage;
+    }
+
+    public String getServiceType() {
+        return serviceType;
+    }
+
+    public void setServiceType(String serviceType) {
+        this.serviceType = serviceType;
+    }
+
+    public LocalDate getServiceDate() {
+        return serviceDate;
+    }
+
+    public void setServiceDate(LocalDate serviceDate) {
+        this.serviceDate = serviceDate;
+    }
+
+    public Integer getOdometerReading() {
+        return odometerReading;
+    }
+
+    public void setOdometerReading(Integer odometerReading) {
+        this.odometerReading = odometerReading;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Instant getRecordedAt() {
+        return recordedAt;
+    }
 }

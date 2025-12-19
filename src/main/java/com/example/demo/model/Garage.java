@@ -8,58 +8,55 @@ import jakarta.persistence.*;
     uniqueConstraints = @UniqueConstraint(columnNames = "garageName")
 )
 public class Garage {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String garageName;
 
     private String address;
     private String contactNumber;
 
     @Column(nullable = false)
-    private Boolean active;
+    private Boolean active = true;
 
-    public Garage() {}
+    // ===== Getters & Setters =====
 
-    public Garage(Long id, String garageName, String address, String contactNumber, Boolean active) {
-        this.id = id;
-        this.garageName = garageName;
-        this.address = address;
-        this.contactNumber = contactNumber;
-        this.active = active;
+    public Long getId() {
+        return id;
     }
 
-    // Getters and setters...
-    public Long getId() { 
-        return id; 
-        }
-    public void setId(Long id) { 
-        this.id = id; 
-        }
-    public String getGarageName() { 
-        return garageName; 
-        }
+    public String getGarageName() {
+        return garageName;
+    }
+
     public void setGarageName(String garageName) {
-     this.garageName = garageName;
-      }
-    public String getAddress() { 
-        return address; 
-        }
+        this.garageName = garageName;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
     public void setAddress(String address) {
-         this.address = address; 
-         }
+        this.address = address;
+    }
+
     public String getContactNumber() {
-         return contactNumber;
-          }
+        return contactNumber;
+    }
+
     public void setContactNumber(String contactNumber) {
-         this.contactNumber = contactNumber;
-          }
-    public Boolean getActive() { 
+        this.contactNumber = contactNumber;
+    }
+
+    public Boolean getActive() {
         return active;
-         }
-    public void setActive(Boolean active) { 
-        this.active = active; 
-        }
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
 }

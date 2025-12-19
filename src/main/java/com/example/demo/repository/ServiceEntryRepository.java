@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface ServiceEntryRepository extends JpaRepository<ServiceEntry, Long> {
 
-    List<ServiceEntry> findByVehicleId(Long vehicleId);
-
     ServiceEntry findTopByVehicleOrderByOdometerReadingDesc(Vehicle vehicle);
+
+    List<ServiceEntry> findByVehicleId(Long vehicleId);
 }
