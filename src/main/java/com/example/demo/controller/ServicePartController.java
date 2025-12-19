@@ -15,10 +15,12 @@ public class ServicePartController {
     public ServicePartController(ServicePartService servicePartService) {
         this.servicePartService = servicePartService;
     }
+    @PostMapping("/entry/{entryId}")
+    public ServicePart createPart(
+            @PathVariable Long entryId,
+            @RequestBody ServicePart part) {
 
-    @PostMapping
-    public ServicePart createPart(@RequestBody ServicePart part) {
-        return servicePartService.createPart(part);
+        return servicePartService.createPart(entryId, part);
     }
 
     @GetMapping("/{id}")
