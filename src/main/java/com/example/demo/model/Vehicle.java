@@ -9,7 +9,7 @@ import java.time.Instant;
     uniqueConstraints = @UniqueConstraint(columnNames = "vin")
 )
 public class Vehicle {
-1
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
