@@ -14,31 +14,28 @@ public class AuthController {
     private final UserService userService;
     private final JwtTokenProvider jwtTokenProvider;
 
-    public AuthController(
-            UserService userService,
-            JwtTokenProvider jwtTokenProvider
-    ) {
+    public AuthController(UserService userService, JwtTokenProvider jwtTokenProvider) {
         this.userService = userService;
         this.jwtTokenProvider = jwtTokenProvider;
     }
 
     @PostMapping("/register")
-    public User register(
-            @RequestBody User user
-    ) {
+    public User register(@RequestBody User user) {
         return userService.register(user);
     }
 
     @PostMapping("/login")
-    public Map<String, String> login(
-            @RequestBody Map<String, String> request
-    ) {
+    public Map<String, String> login(@RequestBody Map<String, String> request) {
         User user = userService.login(
                 request.get("email"),
                 request.get("password")
         );
 
-        // Corrected: Removed user.getId() to match generateToken signature
+        if (user == null) {
+            throw new RuntimeException("Invalid email or password");
+        }
+
+        // Pass only email and role to match your JwtTokenProvider
         String token = jwtTokenProvider.generateToken(
                 user.getEmail(),
                 user.getRole()
