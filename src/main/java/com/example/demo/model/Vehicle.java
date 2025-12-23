@@ -1,12 +1,16 @@
+// Vehicle.java
 package com.example.demo.model;
 
 import jakarta.persistence.*;
-import java.time.Instant;
+import org.hibernate.annotations.CreationTimestamp;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(
-    name = "vehicles",
-    uniqueConstraints = @UniqueConstraint(columnNames = "vin")
+        name = "vehicles",
+        uniqueConstraints = @UniqueConstraint(columnNames = "vin")
 )
 public class Vehicle {
 
@@ -17,18 +21,42 @@ public class Vehicle {
     @Column(nullable = false, unique = true)
     private String vin;
 
+    @Column(nullable = false)
     private String make;
+
+    @Column(nullable = false)
     private String model;
-    private Integer year;
 
     @Column(nullable = false)
     private Long ownerId;
 
-    @Column(nullable = false)
-    private Boolean active = true;
+    private Boolean active;
 
-    @Column(nullable = false, updatable = false)
-    private Instant createdAt = Instant.now();
+    @CreationTimestamp
+    private LocalDateTime createdAt;
+
+    @OneToMany(
+            mappedBy = "vehicle",
+            cascade = CascadeType.ALL
+    )
+    private List<ServiceEntry> serviceEntries;
+
+    public Vehicle() {
+    }
+
+    public Vehicle(
+            String vin,
+            String make,
+            String model,
+            Long ownerId,
+            Boolean active
+    ) {
+        this.vin = vin;
+        this.make = make;
+        this.model = model;
+        this.ownerId = ownerId;
+        this.active = active;
+    }
 
     public Long getId() {
         return id;
@@ -38,40 +66,16 @@ public class Vehicle {
         return vin;
     }
 
-    public void setVin(String vin) {
-        this.vin = vin;
-    }
-
     public String getMake() {
         return make;
-    }
-
-    public void setMake(String make) {
-        this.make = make;
     }
 
     public String getModel() {
         return model;
     }
 
-    public void setModel(String model) {
-        this.model = model;
-    }
-
-    public Integer getYear() {
-        return year;
-    }
-
-    public void setYear(Integer year) {
-        this.year = year;
-    }
-
     public Long getOwnerId() {
         return ownerId;
-    }
-
-    public void setOwnerId(Long ownerId) {
-        this.ownerId = ownerId;
     }
 
     public Boolean getActive() {
@@ -80,9 +84,5 @@ public class Vehicle {
 
     public void setActive(Boolean active) {
         this.active = active;
-    }
-
-    public Instant getCreatedAt() {
-        return createdAt;
     }
 }

@@ -1,11 +1,14 @@
+// Garage.java
 package com.example.demo.model;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(
-    name = "garages",
-    uniqueConstraints = @UniqueConstraint(columnNames = "garageName")
+        name = "garages",
+        uniqueConstraints = @UniqueConstraint(columnNames = "garageName")
 )
 public class Garage {
 
@@ -16,11 +19,29 @@ public class Garage {
     @Column(nullable = false, unique = true)
     private String garageName;
 
-    private String address;
-    private String contactNumber;
-
     @Column(nullable = false)
-    private Boolean active = true;
+    private String address;
+
+    private Boolean active;
+
+    @OneToMany(
+            mappedBy = "garage",
+            cascade = CascadeType.ALL
+    )
+    private List<ServiceEntry> serviceEntries;
+
+    public Garage() {
+    }
+
+    public Garage(
+            String garageName,
+            String address,
+            Boolean active
+    ) {
+        this.garageName = garageName;
+        this.address = address;
+        this.active = active;
+    }
 
     public Long getId() {
         return id;
@@ -30,31 +51,7 @@ public class Garage {
         return garageName;
     }
 
-    public void setGarageName(String garageName) {
-        this.garageName = garageName;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getContactNumber() {
-        return contactNumber;
-    }
-
-    public void setContactNumber(String contactNumber) {
-        this.contactNumber = contactNumber;
-    }
-
     public Boolean getActive() {
         return active;
-    }
-
-    public void setActive(Boolean active) {
-        this.active = active;
     }
 }
