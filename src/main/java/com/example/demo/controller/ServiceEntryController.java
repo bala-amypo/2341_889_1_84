@@ -1,3 +1,4 @@
+// ServiceEntryController.java
 package com.example.demo.controller;
 
 import com.example.demo.model.ServiceEntry;
@@ -7,32 +8,28 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/service-entries")
+@RequestMapping("/service-entries")
 public class ServiceEntryController {
 
     private final ServiceEntryService serviceEntryService;
 
-    public ServiceEntryController(ServiceEntryService serviceEntryService) {
+    public ServiceEntryController(
+            ServiceEntryService serviceEntryService
+    ) {
         this.serviceEntryService = serviceEntryService;
     }
 
     @PostMapping
-    public ServiceEntry createEntry(@RequestBody ServiceEntry entry) {
-        return serviceEntryService.createServiceEntry(entry);
-    }
-
-    @GetMapping("/{id}")
-    public ServiceEntry getById(@PathVariable Long id) {
-        return serviceEntryService.getServiceEntryById(id);
+    public ServiceEntry createServiceEntry(
+            @RequestBody ServiceEntry serviceEntry
+    ) {
+        return serviceEntryService.createServiceEntry(serviceEntry);
     }
 
     @GetMapping("/vehicle/{vehicleId}")
-    public List<ServiceEntry> getByVehicle(@PathVariable Long vehicleId) {
+    public List<ServiceEntry> getEntriesByVehicle(
+            @PathVariable Long vehicleId
+    ) {
         return serviceEntryService.getEntriesForVehicle(vehicleId);
-    }
-
-    @GetMapping("/garage/{garageId}")
-    public List<ServiceEntry> getByGarage(@PathVariable Long garageId) {
-        return serviceEntryService.getEntriesByGarage(garageId);
     }
 }
