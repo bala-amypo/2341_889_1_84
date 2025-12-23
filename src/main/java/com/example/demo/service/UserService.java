@@ -5,4 +5,5 @@ import com.example.demo.model.User;
 public interface UserService {
     User register(User user);
     User login(String email, String password);
+    User getUserById(Long id);   // Add this method
 }

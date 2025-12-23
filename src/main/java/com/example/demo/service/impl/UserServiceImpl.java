@@ -30,6 +30,11 @@ public class UserServiceImpl implements UserService {
         if (user != null && passwordEncoder.matches(password, user.getPassword())) {
             return user;
         }
-        return null; // or throw exception
+        return null;
+    }
+
+    @Override
+    public User getUserById(Long id) {
+        return userRepository.findById(id).orElse(null);  // <-- Implement this
     }
 }
