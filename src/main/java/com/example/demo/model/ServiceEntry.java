@@ -1,8 +1,10 @@
+// ServiceEntry.java
 package com.example.demo.model;
 
 import jakarta.persistence.*;
-import java.time.Instant;
+
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "service_entries")
@@ -12,10 +14,12 @@ public class ServiceEntry {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(optional = false)
+    @ManyToOne
+    @JoinColumn(name = "vehicle_id", nullable = false)
     private Vehicle vehicle;
 
-    @ManyToOne(optional = false)
+    @ManyToOne
+    @JoinColumn(name = "garage_id", nullable = false)
     private Garage garage;
 
     @Column(nullable = false)
@@ -27,10 +31,28 @@ public class ServiceEntry {
     @Column(nullable = false)
     private Integer odometerReading;
 
-    private String description;
+    @OneToMany(
+            mappedBy = "serviceEntry",
+            cascade = CascadeType.ALL
+    )
+    private List<ServicePart> serviceParts;
 
-    @Column(nullable = false, updatable = false)
-    private Instant recordedAt = Instant.now();
+    public ServiceEntry() {
+    }
+
+    public ServiceEntry(
+            Vehicle vehicle,
+            Garage garage,
+            String serviceType,
+            LocalDate serviceDate,
+            Integer odometerReading
+    ) {
+        this.vehicle = vehicle;
+        this.garage = garage;
+        this.serviceType = serviceType;
+        this.serviceDate = serviceDate;
+        this.odometerReading = odometerReading;
+    }
 
     public Long getId() {
         return id;
@@ -40,51 +62,11 @@ public class ServiceEntry {
         return vehicle;
     }
 
-    public void setVehicle(Vehicle vehicle) {
-        this.vehicle = vehicle;
-    }
-
     public Garage getGarage() {
         return garage;
     }
 
-    public void setGarage(Garage garage) {
-        this.garage = garage;
-    }
-
-    public String getServiceType() {
-        return serviceType;
-    }
-
-    public void setServiceType(String serviceType) {
-        this.serviceType = serviceType;
-    }
-
-    public LocalDate getServiceDate() {
-        return serviceDate;
-    }
-
-    public void setServiceDate(LocalDate serviceDate) {
-        this.serviceDate = serviceDate;
-    }
-
     public Integer getOdometerReading() {
         return odometerReading;
-    }
-
-    public void setOdometerReading(Integer odometerReading) {
-        this.odometerReading = odometerReading;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Instant getRecordedAt() {
-        return recordedAt;
     }
 }

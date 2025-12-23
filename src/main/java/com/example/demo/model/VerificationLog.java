@@ -1,7 +1,10 @@
+// VerificationLog.java
 package com.example.demo.model;
 
 import jakarta.persistence.*;
-import java.time.Instant;
+import org.hibernate.annotations.CreationTimestamp;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "verification_logs")
@@ -11,42 +14,30 @@ public class VerificationLog {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(optional = false)
+    @ManyToOne
+    @JoinColumn(
+            name = "service_entry_id",
+            nullable = false
+    )
     private ServiceEntry serviceEntry;
 
-    @Column(nullable = false, updatable = false)
-    private Instant verifiedAt = Instant.now();
+    @CreationTimestamp
+    private LocalDateTime verifiedAt;
 
-    @Column(nullable = false)
-    private Boolean verifiedBySystem = true;
+    public VerificationLog() {
+    }
 
-    private String notes;
+    public VerificationLog(
+            ServiceEntry serviceEntry
+    ) {
+        this.serviceEntry = serviceEntry;
+    }
 
     public Long getId() {
         return id;
     }
 
-    public ServiceEntry getServiceEntry() {
-        return serviceEntry;
-    }
-
-    public void setServiceEntry(ServiceEntry serviceEntry) {
-        this.serviceEntry = serviceEntry;
-    }
-
-    public Instant getVerifiedAt() {
+    public LocalDateTime getVerifiedAt() {
         return verifiedAt;
-    }
-
-    public Boolean getVerifiedBySystem() {
-        return verifiedBySystem;
-    }
-
-    public String getNotes() {
-        return notes;
-    }
-
-    public void setNotes(String notes) {
-        this.notes = notes;
     }
 }
