@@ -3,9 +3,10 @@ package com.example.demo.service.impl;
 import com.example.demo.model.User;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.service.UserService;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.NoSuchElementException;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -28,9 +29,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public User login(String email, String password) {
         User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new EntityNotFoundException("User not found with email: " + email));
+                .orElseThrow(() -> new NoSuchElementException("User not found"));
         if (!passwordEncoder.matches(password, user.getPassword())) {
-            throw new RuntimeException("Invalid password");
+            throw new IllegalArgumentException("Invalid password");
         }
         return user;
     }
@@ -38,6 +39,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserById(Long id) {
         return userRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + id));
+                .orElseThrow(() -> new NoSuchElementException("User not found with id: " + id));
     }
 }
