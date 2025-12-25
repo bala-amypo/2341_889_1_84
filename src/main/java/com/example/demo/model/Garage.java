@@ -1,7 +1,6 @@
 package com.example.demo.model;
 
 import jakarta.persistence.*;
-import java.util.List;
 
 @Entity
 @Table(name = "garages")
@@ -11,42 +10,49 @@ public class Garage {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true)
-    private String garageName;
+    @Column(nullable = false, unique = true)
+    private String name;
 
-    private String address;
-    private Boolean active;
+    @Column(nullable = false)
+    private String location;
 
-    @OneToMany(mappedBy = "garage")
-    private List<ServiceEntry> serviceEntries;
+    @Column(nullable = false)
+    private boolean active;
 
-    public Garage() {}
+    public Garage() {
+    }
 
-    public Garage(String garageName, String address, Boolean active) {
-        this.garageName = garageName;
-        this.address = address;
+    public Garage(String name, String location, boolean active) {
+        this.name = name;
+        this.location = location;
         this.active = active;
     }
 
-    public Long getId() { 
-    return id;
-     }
-    public String getGarageName() {
-     return garageName; 
-     }
-    public void setGarageName(String garageName) { 
-    this.garageName = garageName;
-     }
-    public String getAddress() {
-     return address; 
-     }
-    public void setAddress(String address) { 
-    this.address = address; 
+    public Long getId() {
+        return id;
     }
-    public Boolean getActive() {
-     return active; 
-     }
-    public void setActive(Boolean active) { 
-    this.active = active; 
+
+    public String getName() {
+        return name;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }

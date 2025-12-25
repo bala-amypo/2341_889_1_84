@@ -23,21 +23,10 @@ public class GarageServiceImpl implements GarageService {
     }
 
     @Override
-    public Garage updateGarage(Long id, Garage garage) {
-        Garage existingGarage = garageRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Garage not found with id: " + id));
-
-        existingGarage.setGarageName(garage.getGarageName());
-        existingGarage.setAddress(garage.getAddress());
-        existingGarage.setActive(garage.getActive());
-
-        return garageRepository.save(existingGarage);
-    }
-
-    @Override
     public Garage getGarageById(Long id) {
         return garageRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Garage not found with id: " + id));
+                .orElseThrow(() ->
+                        new EntityNotFoundException("Garage not found with id: " + id));
     }
 
     @Override
@@ -46,11 +35,9 @@ public class GarageServiceImpl implements GarageService {
     }
 
     @Override
-    public void deactivateGarage(Long id) {
-        Garage garage = garageRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Garage not found with id: " + id));
-
+    public Garage deactivateGarage(Long id) {
+        Garage garage = getGarageById(id);
         garage.setActive(false);
-        garageRepository.save(garage);
+        return garageRepository.save(garage);
     }
 }
