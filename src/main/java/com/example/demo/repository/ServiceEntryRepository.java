@@ -1,13 +1,13 @@
-package com.example.demo.service;
+package com.example.demo.repository;
 
 import com.example.demo.model.ServiceEntry;
+import org.springframework.data.jpa.repository.JpaRepository;
+
 import java.util.List;
 
-public interface ServiceEntryService {
+public interface ServiceEntryRepository extends JpaRepository<ServiceEntry, Long> {
 
-    ServiceEntry createServiceEntry(ServiceEntry entry);
+    List<ServiceEntry> findByVehicleId(Long vehicleId);
 
-    List<ServiceEntry> getEntriesForVehicle(Long vehicleId);
-
-    List<ServiceEntry> getEntriesByGarage(Long garageId);
+    List<ServiceEntry> findByGarageId(Long garageId);
 }
