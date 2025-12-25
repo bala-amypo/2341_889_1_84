@@ -1,4 +1,3 @@
-// ServiceEntryServiceImpl.java
 package com.example.demo.service.impl;
 
 import com.example.demo.model.ServiceEntry;
@@ -14,17 +13,30 @@ public class ServiceEntryServiceImpl implements ServiceEntryService {
 
     private final ServiceEntryRepository serviceEntryRepository;
 
-    public ServiceEntryServiceImpl(
-            ServiceEntryRepository serviceEntryRepository
-    ) {
+    // Constructor injection
+    public ServiceEntryServiceImpl(ServiceEntryRepository serviceEntryRepository) {
         this.serviceEntryRepository = serviceEntryRepository;
     }
 
+    @Override
     public ServiceEntry createServiceEntry(ServiceEntry serviceEntry) {
         return serviceEntryRepository.save(serviceEntry);
     }
 
+    @Override
+    public ServiceEntry getServiceEntryById(Long id) {
+        return serviceEntryRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(
+                        "Service entry not found with id: " + id));
+    }
+
+    @Override
     public List<ServiceEntry> getEntriesForVehicle(Long vehicleId) {
         return serviceEntryRepository.findByVehicleId(vehicleId);
+    }
+
+    @Override
+    public List<ServiceEntry> getEntriesByGarage(Long garageId) {
+        return serviceEntryRepository.findByGarageId(garageId);
     }
 }
