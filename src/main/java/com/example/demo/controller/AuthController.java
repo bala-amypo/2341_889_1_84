@@ -35,7 +35,7 @@ public class AuthController {
             throw new RuntimeException("Invalid email or password");
         }
 
-        // Pass only email and role to match your JwtTokenProvider
+        
         String token = jwtTokenProvider.generateToken(
                 user.getEmail(),
                 user.getRole()
