@@ -33,4 +33,14 @@ public class VehicleServiceImpl implements VehicleService {
     public List<Vehicle> getAllVehicles() {
         return vehicleRepository.findAll();
     }
+
+    @Override
+    public void deactivateVehicle(Long id) {
+        Vehicle vehicle = vehicleRepository.findById(id)
+                .orElseThrow(() ->
+                        new EntityNotFoundException("Vehicle not found with id: " + id));
+
+        vehicle.setActive(false);
+        vehicleRepository.save(vehicle);
+    }
 }
