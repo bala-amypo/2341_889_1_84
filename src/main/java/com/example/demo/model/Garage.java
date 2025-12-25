@@ -1,6 +1,7 @@
 package com.example.demo.model;
 
 import jakarta.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "garages")
@@ -11,20 +12,22 @@ public class Garage {
     private Long id;
 
     @Column(nullable = false, unique = true)
-    private String name;
+    private String garageName;
 
     @Column(nullable = false)
-    private String location;
+    private String address;
 
     @Column(nullable = false)
-    private boolean active;
+    private Boolean active = true;
 
-    public Garage() {
-    }
+    @OneToMany(mappedBy = "garage")
+    private List<ServiceEntry> serviceEntries;
 
-    public Garage(String name, String location, boolean active) {
-        this.name = name;
-        this.location = location;
+    public Garage() {}
+
+    public Garage(String garageName, String address, Boolean active) {
+        this.garageName = garageName;
+        this.address = address;
         this.active = active;
     }
 
@@ -32,27 +35,27 @@ public class Garage {
         return id;
     }
 
-    public String getName() {
-        return name;
+    public String getGarageName() {
+        return garageName;
     }
 
-    public String getLocation() {
-        return location;
+    public void setGarageName(String garageName) {
+        this.garageName = garageName;
     }
 
-    public boolean isActive() {
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public Boolean getActive() {
         return active;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    public void setActive(boolean active) {
+    public void setActive(Boolean active) {
         this.active = active;
     }
 }
