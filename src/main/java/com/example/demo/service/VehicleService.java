@@ -9,6 +9,8 @@ public interface VehicleService {
 
     Vehicle getVehicleById(Long id);
 
+    Vehicle getVehicleByVin(String vin);   // ⭐ THIS LINE MUST EXIST
+
     List<Vehicle> getAllVehicles();
 
     List<Vehicle> getVehiclesByOwner(Long ownerId);
