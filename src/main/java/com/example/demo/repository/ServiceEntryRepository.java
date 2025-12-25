@@ -12,3 +12,5 @@ public interface ServiceEntryService {
 
     List<ServiceEntry> getEntriesByGarage(Long garageId);
 }
+
+
