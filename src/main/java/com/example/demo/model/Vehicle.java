@@ -10,8 +10,8 @@ public class Vehicle {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private String registrationNumber;
+    @Column(nullable = false, unique = true)
+    private String vin;
 
     @Column(nullable = false)
     private String model;
@@ -24,8 +24,8 @@ public class Vehicle {
 
     public Vehicle() {}
 
-    public Vehicle(String registrationNumber, String model, Long ownerId) {
-        this.registrationNumber = registrationNumber;
+    public Vehicle(String vin, String model, Long ownerId) {
+        this.vin = vin;
         this.model = model;
         this.ownerId = ownerId;
         this.active = true;
@@ -35,12 +35,12 @@ public class Vehicle {
         return id;
     }
 
-    public String getRegistrationNumber() {
-        return registrationNumber;
+    public String getVin() {
+        return vin;
     }
 
-    public void setRegistrationNumber(String registrationNumber) {
-        this.registrationNumber = registrationNumber;
+    public void setVin(String vin) {
+        this.vin = vin;
     }
 
     public String getModel() {
