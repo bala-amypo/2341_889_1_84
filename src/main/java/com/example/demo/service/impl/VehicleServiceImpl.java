@@ -30,6 +30,15 @@ public class VehicleServiceImpl implements VehicleService {
                                 "Vehicle not found with id: " + id));
     }
 
+    // ✅ THIS METHOD WAS MISSING
+    @Override
+    public Vehicle getVehicleByVin(String vin) {
+        return vehicleRepository.findByVin(vin)
+                .orElseThrow(() ->
+                        new EntityNotFoundException(
+                                "Vehicle not found with vin: " + vin));
+    }
+
     @Override
     public List<Vehicle> getAllVehicles() {
         return vehicleRepository.findAll();
