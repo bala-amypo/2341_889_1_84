@@ -30,21 +30,7 @@ public class VehicleServiceImpl implements VehicleService {
     }
 
     @Override
-    public Vehicle getVehicleByVin(String vin) {
-        return vehicleRepository.findByVin(vin)
-                .orElseThrow(() ->
-                        new EntityNotFoundException("Vehicle not found with VIN: " + vin));
-    }
-
-    @Override
-    public List<Vehicle> getVehiclesByOwner(Long ownerId) {
-        return vehicleRepository.findByOwnerId(ownerId);
-    }
-
-    @Override
-    public void deactivateVehicle(Long id) {
-        Vehicle vehicle = getVehicleById(id);
-        vehicle.setActive(false);
-        vehicleRepository.save(vehicle);
+    public List<Vehicle> getAllVehicles() {
+        return vehicleRepository.findAll();
     }
 }
