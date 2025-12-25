@@ -3,9 +3,9 @@ package com.example.demo.service.impl;
 import com.example.demo.model.User;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.service.UserService;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -29,11 +29,9 @@ public class UserServiceImpl implements UserService {
     public User login(String email, String password) {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new EntityNotFoundException("User not found with email: " + email));
-
         if (!passwordEncoder.matches(password, user.getPassword())) {
-            throw new RuntimeException("Invalid credentials");
+            throw new RuntimeException("Invalid password");
         }
-
         return user;
     }
 
