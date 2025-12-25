@@ -12,7 +12,6 @@ public class GarageServiceImpl implements GarageService {
 
     private final GarageRepository garageRepository;
 
-    // Constructor injection
     public GarageServiceImpl(GarageRepository garageRepository) {
         this.garageRepository = garageRepository;
     }
@@ -27,9 +26,9 @@ public class GarageServiceImpl implements GarageService {
         Garage existingGarage = garageRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Garage not found with id: " + id));
 
-        existingGarage.setName(garage.getName());
-        existingGarage.setLocation(garage.getLocation());
-        existingGarage.setActive(garage.isActive());
+        existingGarage.setGarageName(garage.getGarageName());
+        existingGarage.setAddress(garage.getAddress());
+        existingGarage.setActive(garage.getActive());
 
         return garageRepository.save(existingGarage);
     }

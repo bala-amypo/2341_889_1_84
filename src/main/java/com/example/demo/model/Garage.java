@@ -11,10 +11,11 @@ public class Garage {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String garageName;
 
     private String address;
+
     private Boolean active;
 
     @OneToMany(mappedBy = "garage")
@@ -28,25 +29,31 @@ public class Garage {
         this.active = active;
     }
 
-    public Long getId() { 
-    return id; 
+    public Long getId() {
+        return id;
     }
-    public String getGarageName() { 
-    return garageName;
-     }
+
+    public String getGarageName() {
+        return garageName;
+    }
+
     public void setGarageName(String garageName) {
-     this.garageName = garageName;
-      }
+        this.garageName = garageName;
+    }
+
     public String getAddress() {
-     return address;
-      }
-    public void setAddress(String address) { 
-    this.address = address;
-     }
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
     public Boolean getActive() {
-     return active; 
-     }
+        return active;
+    }
+
     public void setActive(Boolean active) {
-     this.active = active; 
-     }
+        this.active = active;
+    }
 }
