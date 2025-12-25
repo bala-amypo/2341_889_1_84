@@ -1,9 +1,6 @@
-// VerificationLog.java
 package com.example.demo.model;
 
 import jakarta.persistence.*;
-import org.hibernate.annotations.CreationTimestamp;
-
 import java.time.LocalDateTime;
 
 @Entity
@@ -15,29 +12,24 @@ public class VerificationLog {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(
-            name = "service_entry_id",
-            nullable = false
-    )
     private ServiceEntry serviceEntry;
 
-    @CreationTimestamp
     private LocalDateTime verifiedAt;
 
-    public VerificationLog() {
-    }
+    public VerificationLog() {}
 
-    public VerificationLog(
-            ServiceEntry serviceEntry
-    ) {
+    public VerificationLog(ServiceEntry serviceEntry) {
         this.serviceEntry = serviceEntry;
+        this.verifiedAt = LocalDateTime.now();
     }
 
-    public Long getId() {
-        return id;
-    }
-
+    public Long getId() { 
+        return id; 
+        }
+    public ServiceEntry getServiceEntry() {
+         return serviceEntry;
+          }
     public LocalDateTime getVerifiedAt() {
-        return verifiedAt;
-    }
+         return verifiedAt;
+          }
 }
