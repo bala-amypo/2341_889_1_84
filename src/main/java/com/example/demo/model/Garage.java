@@ -4,18 +4,23 @@ import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "garages")
+@Table(
+        name = "garages",
+        uniqueConstraints = @UniqueConstraint(columnNames = "garageName")
+)
 public class Garage {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false, unique = true)
     private String garageName;
 
+    @Column(nullable = false)
     private String address;
 
+    @Column(nullable = false)
     private Boolean active;
 
     @OneToMany(mappedBy = "garage")
