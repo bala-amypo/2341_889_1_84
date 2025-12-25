@@ -9,45 +9,36 @@ import java.util.Date;
 @Component
 public class JwtTokenProvider {
 
-    private final String jwtSecret = "mySecretKey"; // You can change this to your secret
-    private final long jwtExpirationMs = 86400000; // 24 hours
+    private final String JWT_SECRET = "mySecretKey"; // Ideally move to application.properties
+    private final long JWT_EXPIRATION = 24 * 60 * 60 * 1000; // 24 hours
 
-    // Generate JWT token
     public String generateToken(String email, String role) {
+        Date now = new Date();
+        Date expiryDate = new Date(now.getTime() + JWT_EXPIRATION);
+
         return Jwts.builder()
                 .setSubject(email)
                 .claim("role", role)
-                .setIssuedAt(new Date())
-                .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))
-                .signWith(SignatureAlgorithm.HS512, jwtSecret)
+                .setIssuedAt(now)
+                .setExpiration(expiryDate)
+                .signWith(SignatureAlgorithm.HS512, JWT_SECRET)
                 .compact();
     }
 
-    // Validate token
-    public boolean validateToken(String token) {
-        try {
-            Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token);
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
-    }
-
-    // Extract username (email) from token
     public String getEmailFromToken(String token) {
         return Jwts.parser()
-                .setSigningKey(jwtSecret)
+                .setSigningKey(JWT_SECRET)
                 .parseClaimsJws(token)
                 .getBody()
                 .getSubject();
     }
 
-    // Extract role from token
-    public String getRoleFromToken(String token) {
-        return (String) Jwts.parser()
-                .setSigningKey(jwtSecret)
-                .parseClaimsJws(token)
-                .getBody()
-                .get("role");
+    public boolean validateToken(String token) {
+        try {
+            Jwts.parser().setSigningKey(JWT_SECRET).parseClaimsJws(token);
+            return true;
+        } catch (Exception ex) {
+            return false;
+        }
     }
 }
