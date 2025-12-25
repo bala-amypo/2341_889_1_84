@@ -26,7 +26,8 @@ public class VehicleServiceImpl implements VehicleService {
     public Vehicle getVehicleById(Long id) {
         return vehicleRepository.findById(id)
                 .orElseThrow(() ->
-                        new EntityNotFoundException("Vehicle not found with id: " + id));
+                        new EntityNotFoundException(
+                                "Vehicle not found with id: " + id));
     }
 
     @Override
@@ -35,10 +36,16 @@ public class VehicleServiceImpl implements VehicleService {
     }
 
     @Override
+    public List<Vehicle> getVehiclesByOwner(Long ownerId) {
+        return vehicleRepository.findByOwnerId(ownerId);
+    }
+
+    @Override
     public void deactivateVehicle(Long id) {
         Vehicle vehicle = vehicleRepository.findById(id)
                 .orElseThrow(() ->
-                        new EntityNotFoundException("Vehicle not found with id: " + id));
+                        new EntityNotFoundException(
+                                "Vehicle not found with id: " + id));
 
         vehicle.setActive(false);
         vehicleRepository.save(vehicle);

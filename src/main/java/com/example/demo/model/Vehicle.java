@@ -10,22 +10,25 @@ public class Vehicle {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String registrationNumber;
 
     @Column(nullable = false)
-    private String ownerName;
+    private String model;
 
     @Column(nullable = false)
-    private String vehicleType;
+    private Long ownerId;
 
-    public Vehicle() {
-    }
+    @Column(nullable = false)
+    private Boolean active = true;
 
-    public Vehicle(String registrationNumber, String ownerName, String vehicleType) {
+    public Vehicle() {}
+
+    public Vehicle(String registrationNumber, String model, Long ownerId) {
         this.registrationNumber = registrationNumber;
-        this.ownerName = ownerName;
-        this.vehicleType = vehicleType;
+        this.model = model;
+        this.ownerId = ownerId;
+        this.active = true;
     }
 
     public Long getId() {
@@ -36,23 +39,31 @@ public class Vehicle {
         return registrationNumber;
     }
 
-    public String getOwnerName() {
-        return ownerName;
-    }
-
-    public String getVehicleType() {
-        return vehicleType;
-    }
-
     public void setRegistrationNumber(String registrationNumber) {
         this.registrationNumber = registrationNumber;
     }
 
-    public void setOwnerName(String ownerName) {
-        this.ownerName = ownerName;
+    public String getModel() {
+        return model;
     }
 
-    public void setVehicleType(String vehicleType) {
-        this.vehicleType = vehicleType;
+    public void setModel(String model) {
+        this.model = model;
+    }
+
+    public Long getOwnerId() {
+        return ownerId;
+    }
+
+    public void setOwnerId(Long ownerId) {
+        this.ownerId = ownerId;
+    }
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
     }
 }
