@@ -28,11 +28,25 @@ public class Garage {
         this.active = active;
     }
 
-    public Long getId() { return id; }
-    public String getGarageName() { return garageName; }
-    public void setGarageName(String garageName) { this.garageName = garageName; }
-    public String getAddress() { return address; }
-    public void setAddress(String address) { this.address = address; }
-    public Boolean getActive() { return active; }
-    public void setActive(Boolean active) { this.active = active; }
+    public Long getId() { 
+    return id;
+     }
+    public String getGarageName() {
+     return garageName; 
+     }
+    public void setGarageName(String garageName) { 
+    this.garageName = garageName;
+     }
+    public String getAddress() {
+     return address; 
+     }
+    public void setAddress(String address) { 
+    this.address = address; 
+    }
+    public Boolean getActive() {
+     return active; 
+     }
+    public void setActive(Boolean active) { 
+    this.active = active; 
+    }
 }
