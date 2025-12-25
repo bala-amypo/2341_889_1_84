@@ -1,8 +1,9 @@
 package com.example.demo.model;
 
 import jakarta.persistence.*;
-import java.time.LocalDate;
-import java.util.List;
+import org.hibernate.annotations.CreationTimestamp;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "service_entries")
@@ -12,47 +13,70 @@ public class ServiceEntry {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "vehicle_id")
     private Vehicle vehicle;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "garage_id")
     private Garage garage;
 
-    private String serviceType;
-    private LocalDate serviceDate;
-    private Integer odometerReading;
+    @Column(nullable = false)
+    private String description;
 
-    @OneToMany(mappedBy = "serviceEntry")
-    private List<ServicePart> parts;
+    @CreationTimestamp
+    private LocalDateTime serviceDate;
 
-    public ServiceEntry() {}
+    @Column(nullable = false)
+    private Double cost;
 
-    public ServiceEntry(Vehicle vehicle, Garage garage,
-                        String serviceType, LocalDate serviceDate,
-                        Integer odometerReading) {
+    public ServiceEntry() {
+    }
+
+    public ServiceEntry(Vehicle vehicle, Garage garage, String description, Double cost) {
         this.vehicle = vehicle;
         this.garage = garage;
-        this.serviceType = serviceType;
-        this.serviceDate = serviceDate;
-        this.odometerReading = odometerReading;
+        this.description = description;
+        this.cost = cost;
     }
 
-    public Long getId() { 
-    return id; 
+    public Long getId() {
+        return id;
     }
-    public Vehicle getVehicle() { 
-    return vehicle; 
+
+    public Vehicle getVehicle() {
+        return vehicle;
     }
+
     public Garage getGarage() {
-     return garage;
-      }
-    public String getServiceType() { 
-    return serviceType; 
+        return garage;
     }
-    public LocalDate getServiceDate() {
-     return serviceDate;
-      }
-    public Integer getOdometerReading() {
-     return odometerReading;
-      }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public LocalDateTime getServiceDate() {
+        return serviceDate;
+    }
+
+    public Double getCost() {
+        return cost;
+    }
+
+    public void setVehicle(Vehicle vehicle) {
+        this.vehicle = vehicle;
+    }
+
+    public void setGarage(Garage garage) {
+        this.garage = garage;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setCost(Double cost) {
+        this.cost = cost;
+    }
 }

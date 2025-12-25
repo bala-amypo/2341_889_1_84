@@ -13,7 +13,6 @@ public class ServiceEntryServiceImpl implements ServiceEntryService {
 
     private final ServiceEntryRepository serviceEntryRepository;
 
-    // Constructor injection
     public ServiceEntryServiceImpl(ServiceEntryRepository serviceEntryRepository) {
         this.serviceEntryRepository = serviceEntryRepository;
     }
@@ -26,17 +25,17 @@ public class ServiceEntryServiceImpl implements ServiceEntryService {
     @Override
     public ServiceEntry getServiceEntryById(Long id) {
         return serviceEntryRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException(
-                        "Service entry not found with id: " + id));
+                .orElseThrow(() ->
+                        new EntityNotFoundException("Service entry not found with id: " + id));
     }
 
     @Override
-    public List<ServiceEntry> getEntriesForVehicle(Long vehicleId) {
+    public List<ServiceEntry> getServiceEntriesByVehicle(Long vehicleId) {
         return serviceEntryRepository.findByVehicleId(vehicleId);
     }
 
     @Override
-    public List<ServiceEntry> getEntriesByGarage(Long garageId) {
+    public List<ServiceEntry> getServiceEntriesByGarage(Long garageId) {
         return serviceEntryRepository.findByGarageId(garageId);
     }
 }
