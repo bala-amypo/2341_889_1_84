@@ -4,23 +4,17 @@ import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(
-        name = "garages",
-        uniqueConstraints = @UniqueConstraint(columnNames = "garageName")
-)
+@Table(name = "garages")
 public class Garage {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true)
+    @Column(unique = true)
     private String garageName;
 
-    @Column(nullable = false)
     private String address;
-
-    @Column(nullable = false)
     private Boolean active;
 
     @OneToMany(mappedBy = "garage")
@@ -34,31 +28,11 @@ public class Garage {
         this.active = active;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public String getGarageName() {
-        return garageName;
-    }
-
-    public void setGarageName(String garageName) {
-        this.garageName = garageName;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public Boolean getActive() {
-        return active;
-    }
-
-    public void setActive(Boolean active) {
-        this.active = active;
-    }
+    public Long getId() { return id; }
+    public String getGarageName() { return garageName; }
+    public void setGarageName(String garageName) { this.garageName = garageName; }
+    public String getAddress() { return address; }
+    public void setAddress(String address) { this.address = address; }
+    public Boolean getActive() { return active; }
+    public void setActive(Boolean active) { this.active = active; }
 }

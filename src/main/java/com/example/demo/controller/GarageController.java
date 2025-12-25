@@ -2,14 +2,12 @@ package com.example.demo.controller;
 
 import com.example.demo.model.Garage;
 import com.example.demo.service.GarageService;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/garages")
-@Tag(name = "Garage API")
+@RequestMapping("/garages")
 public class GarageController {
 
     private final GarageService garageService;
@@ -38,7 +36,7 @@ public class GarageController {
         return garageService.getAllGarages();
     }
 
-    @PutMapping("/{id}/deactivate")
+    @PutMapping("/deactivate/{id}")
     public void deactivateGarage(@PathVariable Long id) {
         garageService.deactivateGarage(id);
     }
