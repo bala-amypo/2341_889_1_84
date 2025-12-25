@@ -26,10 +26,7 @@ public class ServicePartServiceImpl implements ServicePartService {
     public ServicePart getPartById(Long id) {
         return servicePartRepository.findById(id)
                 .orElseThrow(() ->
-                        new EntityNotFoundException(
-                                "Service part not found with id: " + id
-                        )
-                );
+                        new EntityNotFoundException("Service part not found with id: " + id));
     }
 
     @Override

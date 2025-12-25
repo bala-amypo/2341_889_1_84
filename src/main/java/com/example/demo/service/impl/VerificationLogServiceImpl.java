@@ -13,8 +13,7 @@ public class VerificationLogServiceImpl implements VerificationLogService {
 
     private final VerificationLogRepository verificationLogRepository;
 
-    public VerificationLogServiceImpl(
-            VerificationLogRepository verificationLogRepository) {
+    public VerificationLogServiceImpl(VerificationLogRepository verificationLogRepository) {
         this.verificationLogRepository = verificationLogRepository;
     }
 
@@ -31,7 +30,7 @@ public class VerificationLogServiceImpl implements VerificationLogService {
     }
 
     @Override
-    public List<VerificationLog> getLogsForEntry(Long serviceEntryId) {
+    public List<VerificationLog> getLogsForServiceEntry(Long serviceEntryId) {
         return verificationLogRepository.findByServiceEntryId(serviceEntryId);
     }
 }
