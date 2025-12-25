@@ -1,22 +1,14 @@
-package com.example.demo.repository;
+package com.example.demo.service;
 
 import com.example.demo.model.ServiceEntry;
-import com.example.demo.model.Vehicle;
-import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
-public interface ServiceEntryRepository extends JpaRepository<ServiceEntry, Long> {
+public interface ServiceEntryService {
 
-    Optional<ServiceEntry> findTopByVehicleOrderByOdometerReadingDesc(Vehicle vehicle);
+    ServiceEntry createServiceEntry(ServiceEntry entry);
 
-    List<ServiceEntry> findByVehicleId(Long vehicleId);
+    List<ServiceEntry> getEntriesForVehicle(Long vehicleId);
 
-    List<ServiceEntry> findByGarageIdAndOdometerReadingGreaterThanEqual(
-            Long garageId, int minOdometer);
-
-    List<ServiceEntry> findByVehicleIdAndServiceDateBetween(
-            Long vehicleId, LocalDate from, LocalDate to);
+    List<ServiceEntry> getEntriesByGarage(Long garageId);
 }

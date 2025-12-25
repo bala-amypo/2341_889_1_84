@@ -1,11 +1,18 @@
-package com.example.demo.repository;
+package com.example.demo.service;
 
 import com.example.demo.model.Garage;
-import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.Optional;
+import java.util.List;
 
-public interface GarageRepository extends JpaRepository<Garage, Long> {
+public interface GarageService {
 
-    Optional<Garage> findByGarageName(String garageName);
+    Garage createGarage(Garage garage);
+
+    Garage updateGarage(Long id, Garage garage);
+
+    Garage getGarageById(Long id);
+
+    List<Garage> getAllGarages();
+
+    void deactivateGarage(Long id);
 }
