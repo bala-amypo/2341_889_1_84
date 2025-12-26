@@ -23,7 +23,8 @@ public class Garage {
     @OneToMany(mappedBy = "garage")
     private List<ServiceEntry> serviceEntries;
 
-    public Garage() {}
+    public Garage() {
+    }
 
     public Garage(String garageName, String address, Boolean active) {
         this.garageName = garageName;
@@ -31,8 +32,14 @@ public class Garage {
         this.active = active;
     }
 
+    /* ===== getters & setters required by tests ===== */
+
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getGarageName() {
@@ -53,6 +60,10 @@ public class Garage {
 
     public Boolean getActive() {
         return active;
+    }
+
+    public boolean isActive() {
+        return active != null && active;
     }
 
     public void setActive(Boolean active) {
