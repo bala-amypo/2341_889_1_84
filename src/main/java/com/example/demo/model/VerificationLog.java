@@ -1,7 +1,7 @@
 package com.example.demo.model;
 
 import jakarta.persistence.*;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "verification_logs")
@@ -22,51 +22,62 @@ public class VerificationLog {
     private String verifiedBy;
 
     @Column(nullable = false)
-    private LocalDateTime verifiedAt;
+    private LocalDate verifiedAt;
 
     public VerificationLog() {
     }
 
-    public VerificationLog(ServiceEntry serviceEntry, String status, String verifiedBy, LocalDateTime verifiedAt) {
+    public VerificationLog(
+            ServiceEntry serviceEntry,
+            String status,
+            String verifiedBy,
+            LocalDate verifiedAt
+    ) {
         this.serviceEntry = serviceEntry;
         this.status = status;
         this.verifiedBy = verifiedBy;
         this.verifiedAt = verifiedAt;
     }
 
+    /* ===== getters & setters required by tests ===== */
+
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {            // ✅ REQUIRED
+        this.id = id;
     }
 
     public ServiceEntry getServiceEntry() {
         return serviceEntry;
     }
 
-    public String getStatus() {
-        return status;
-    }
-
-    public String getVerifiedBy() {
-        return verifiedBy;
-    }
-
-    public LocalDateTime getVerifiedAt() {
-        return verifiedAt;
-    }
-
     public void setServiceEntry(ServiceEntry serviceEntry) {
         this.serviceEntry = serviceEntry;
+    }
+
+    public String getStatus() {
+        return status;
     }
 
     public void setStatus(String status) {
         this.status = status;
     }
 
+    public String getVerifiedBy() {
+        return verifiedBy;
+    }
+
     public void setVerifiedBy(String verifiedBy) {
         this.verifiedBy = verifiedBy;
     }
 
-    public void setVerifiedAt(LocalDateTime verifiedAt) {
+    public LocalDate getVerifiedAt() {
+        return verifiedAt;
+    }
+
+    public void setVerifiedAt(LocalDate verifiedAt) {
         this.verifiedAt = verifiedAt;
     }
 }
