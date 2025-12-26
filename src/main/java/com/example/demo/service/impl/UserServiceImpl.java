@@ -1,6 +1,5 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.model.User;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.service.UserService;
@@ -9,41 +8,23 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class UserServiceImpl implements UserService {
-
+    
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-
-    public UserServiceImpl(
-            UserRepository userRepository,
-            PasswordEncoder passwordEncoder
-    ) {
+    
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
     }
-
+    
     @Override
-    public User register(User user) {
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email).orElse(null);
+    }
+    
+    @Override
+    public User createUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
-    }
-
-    @Override
-    public User login(String email, String password) {
-        User user = userRepository.findByEmail(email)
-                .orElseThrow(() ->
-                        new ResourceNotFoundException("User not found with email: " + email));
-
-        if (!passwordEncoder.matches(password, user.getPassword())) {
-            throw new IllegalArgumentException("Invalid email or password");
-        }
-
-        return user;
-    }
-
-    @Override
-    public User getUserById(Long id) {
-        return userRepository.findById(id)
-                .orElseThrow(() ->
-                        new ResourceNotFoundException("User not found with id: " + id));
     }
 }

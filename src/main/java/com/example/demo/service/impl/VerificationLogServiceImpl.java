@@ -1,36 +1,37 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.model.VerificationLog;
+import com.example.demo.model.ServiceEntry;
 import com.example.demo.repository.VerificationLogRepository;
+import com.example.demo.repository.ServiceEntryRepository;
 import com.example.demo.service.VerificationLogService;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
+import java.time.LocalDateTime;
 
 @Service
 public class VerificationLogServiceImpl implements VerificationLogService {
-
+    
     private final VerificationLogRepository verificationLogRepository;
-
-    public VerificationLogServiceImpl(VerificationLogRepository verificationLogRepository) {
+    private final ServiceEntryRepository serviceEntryRepository;
+    
+    public VerificationLogServiceImpl(VerificationLogRepository verificationLogRepository,
+                                    ServiceEntryRepository serviceEntryRepository) {
         this.verificationLogRepository = verificationLogRepository;
+        this.serviceEntryRepository = serviceEntryRepository;
     }
-
+    
     @Override
-    public VerificationLog createLog(VerificationLog verificationLog) {
-        return verificationLogRepository.save(verificationLog);
-    }
-
-    @Override
-    public VerificationLog getLogById(Long id) {
-        return verificationLogRepository.findById(id)
-                .orElseThrow(() ->
-                        new ResourceNotFoundException("Verification log not found with id: " + id));
-    }
-
-    @Override
-    public List<VerificationLog> getLogsForEntry(Long serviceEntryId) {
-        return verificationLogRepository.findByServiceEntryId(serviceEntryId);
+    public VerificationLog createLog(VerificationLog log) {
+        // Verify service entry exists
+        ServiceEntry serviceEntry = serviceEntryRepository.findById(log.getServiceEntry().getId())
+                .orElseThrow(() -> new EntityNotFoundException("Service entry not found"));
+        
+        log.setServiceEntry(serviceEntry);
+        if (log.getVerifiedAt() == null) {
+            log.setVerifiedAt(LocalDateTime.now());
+        }
+        
+        return verificationLogRepository.save(log);
     }
 }
