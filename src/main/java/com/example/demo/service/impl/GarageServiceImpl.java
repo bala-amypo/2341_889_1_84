@@ -1,5 +1,6 @@
 package com.example.demo.service.impl;
 
+import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.model.Garage;
 import com.example.demo.repository.GarageRepository;
 import com.example.demo.service.GarageService;
@@ -24,7 +25,8 @@ public class GarageServiceImpl implements GarageService {
     @Override
     public Garage updateGarage(Long id, Garage garage) {
         Garage existing = garageRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Garage not found"));
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Garage not found with id: " + id));
 
         existing.setGarageName(garage.getGarageName());
         existing.setAddress(garage.getAddress());
@@ -36,7 +38,8 @@ public class GarageServiceImpl implements GarageService {
     @Override
     public Garage getGarageById(Long id) {
         return garageRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Garage not found"));
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Garage not found with id: " + id));
     }
 
     @Override
@@ -47,7 +50,8 @@ public class GarageServiceImpl implements GarageService {
     @Override
     public void deactivateGarage(Long id) {
         Garage garage = garageRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Garage not found"));
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Garage not found with id: " + id));
 
         garage.setActive(false);
         garageRepository.save(garage);
