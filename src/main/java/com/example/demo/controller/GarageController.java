@@ -22,7 +22,10 @@ public class GarageController {
     }
 
     @PutMapping("/{id}")
-    public Garage updateGarage(@PathVariable Long id, @RequestBody Garage garage) {
+    public Garage updateGarage(
+            @PathVariable Long id,
+            @RequestBody Garage garage
+    ) {
         return garageService.updateGarage(id, garage);
     }
 
@@ -36,7 +39,7 @@ public class GarageController {
         return garageService.getAllGarages();
     }
 
-    @PutMapping("/deactivate/{id}")
+    @PutMapping("/{id}/deactivate")
     public void deactivateGarage(@PathVariable Long id) {
         garageService.deactivateGarage(id);
     }

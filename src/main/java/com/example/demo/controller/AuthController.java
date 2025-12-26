@@ -14,7 +14,10 @@ public class AuthController {
     private final UserService userService;
     private final JwtTokenProvider jwtTokenProvider;
 
-    public AuthController(UserService userService, JwtTokenProvider jwtTokenProvider) {
+    public AuthController(
+            UserService userService,
+            JwtTokenProvider jwtTokenProvider
+    ) {
         this.userService = userService;
         this.jwtTokenProvider = jwtTokenProvider;
     }
@@ -26,16 +29,16 @@ public class AuthController {
 
     @PostMapping("/login")
     public Map<String, String> login(@RequestBody Map<String, String> request) {
+
         User user = userService.login(
                 request.get("email"),
                 request.get("password")
         );
 
         if (user == null) {
-            throw new RuntimeException("Invalid email or password");
+            throw new RuntimeException("Invalid credentials");
         }
 
-        
         String token = jwtTokenProvider.generateToken(
                 user.getEmail(),
                 user.getRole()
