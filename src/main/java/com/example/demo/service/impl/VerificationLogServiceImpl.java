@@ -1,9 +1,9 @@
 package com.example.demo.service.impl;
 
+import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.model.VerificationLog;
 import com.example.demo.repository.VerificationLogRepository;
 import com.example.demo.service.VerificationLogService;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,9 +13,7 @@ public class VerificationLogServiceImpl implements VerificationLogService {
 
     private final VerificationLogRepository verificationLogRepository;
 
-    public VerificationLogServiceImpl(
-            VerificationLogRepository verificationLogRepository
-    ) {
+    public VerificationLogServiceImpl(VerificationLogRepository verificationLogRepository) {
         this.verificationLogRepository = verificationLogRepository;
     }
 
@@ -28,8 +26,7 @@ public class VerificationLogServiceImpl implements VerificationLogService {
     public VerificationLog getLogById(Long id) {
         return verificationLogRepository.findById(id)
                 .orElseThrow(() ->
-                        new EntityNotFoundException(
-                                "Verification log not found with id: " + id));
+                        new ResourceNotFoundException("Verification log not found with id: " + id));
     }
 
     @Override
