@@ -9,7 +9,7 @@ public interface VehicleService {
 
     Vehicle getVehicleById(Long id);
 
-    Vehicle getVehicleByVin(String vin);   // ⭐ THIS LINE MUST EXIST
+    Vehicle getVehicleByVin(String vin);   // REQUIRED for /api/vehicles/vin/{vin}
 
     List<Vehicle> getAllVehicles();
 
