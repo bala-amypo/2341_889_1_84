@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/service-parts")
+@RequestMapping("/service-parts")
 @Tag(name = "Service Part API")
 public class ServicePartController {
 
@@ -19,17 +19,19 @@ public class ServicePartController {
     }
 
     @PostMapping
-    public ServicePart addPart(@RequestBody ServicePart part) {
+    public ServicePart createServicePart(@RequestBody ServicePart part) {
         return servicePartService.createPart(part);
     }
 
     @GetMapping("/{id}")
-    public ServicePart getPartById(@PathVariable Long id) {
+    public ServicePart getServicePartById(@PathVariable Long id) {
         return servicePartService.getPartById(id);
     }
 
-    @GetMapping("/entry/{entryId}")
-    public List<ServicePart> getPartsByEntry(@PathVariable Long entryId) {
-        return servicePartService.getPartsForEntry(entryId);
+    @GetMapping("/service-entry/{serviceEntryId}")
+    public List<ServicePart> getPartsForServiceEntry(
+            @PathVariable Long serviceEntryId
+    ) {
+        return servicePartService.getPartsForEntry(serviceEntryId);
     }
 }

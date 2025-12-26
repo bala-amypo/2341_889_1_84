@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/service-entries")
+@RequestMapping("/service-entries")
 @Tag(name = "Service Entry API")
 public class ServiceEntryController {
 
@@ -24,17 +24,21 @@ public class ServiceEntryController {
     }
 
     @GetMapping("/{id}")
-    public ServiceEntry getEntryById(@PathVariable Long id) {
+    public ServiceEntry getServiceEntryById(@PathVariable Long id) {
         return serviceEntryService.getServiceEntryById(id);
     }
 
     @GetMapping("/vehicle/{vehicleId}")
-    public List<ServiceEntry> getEntriesByVehicle(@PathVariable Long vehicleId) {
+    public List<ServiceEntry> getEntriesForVehicle(
+            @PathVariable Long vehicleId
+    ) {
         return serviceEntryService.getEntriesForVehicle(vehicleId);
     }
 
     @GetMapping("/garage/{garageId}")
-    public List<ServiceEntry> getEntriesByGarage(@PathVariable Long garageId) {
+    public List<ServiceEntry> getEntriesByGarage(
+            @PathVariable Long garageId
+    ) {
         return serviceEntryService.getEntriesByGarage(garageId);
     }
 }
