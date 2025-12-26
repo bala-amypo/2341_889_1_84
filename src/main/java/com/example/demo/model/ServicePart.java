@@ -26,43 +26,54 @@ public class ServicePart {
     public ServicePart() {
     }
 
-    public ServicePart(ServiceEntry serviceEntry, String partName, Integer quantity, Double price) {
+    public ServicePart(
+            ServiceEntry serviceEntry,
+            String partName,
+            Integer quantity,
+            Double price
+    ) {
         this.serviceEntry = serviceEntry;
         this.partName = partName;
         this.quantity = quantity;
         this.price = price;
     }
 
+    /* ===== getters & setters required by tests ===== */
+
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {   // ✅ REQUIRED BY TESTS
+        this.id = id;
     }
 
     public ServiceEntry getServiceEntry() {
         return serviceEntry;
     }
 
-    public String getPartName() {
-        return partName;
-    }
-
-    public Integer getQuantity() {
-        return quantity;
-    }
-
-    public Double getPrice() {
-        return price;
-    }
-
     public void setServiceEntry(ServiceEntry serviceEntry) {
         this.serviceEntry = serviceEntry;
+    }
+
+    public String getPartName() {
+        return partName;
     }
 
     public void setPartName(String partName) {
         this.partName = partName;
     }
 
+    public Integer getQuantity() {
+        return quantity;
+    }
+
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
+    }
+
+    public Double getPrice() {
+        return price;
     }
 
     public void setPrice(Double price) {

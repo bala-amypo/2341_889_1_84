@@ -1,9 +1,8 @@
 package com.example.demo.model;
 
 import jakarta.persistence.*;
-import org.hibernate.annotations.CreationTimestamp;
-
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "service_entries")
@@ -22,58 +21,78 @@ public class ServiceEntry {
     private Garage garage;
 
     @Column(nullable = false)
-    private String description;
+    private String serviceType;
 
-    @CreationTimestamp
-    private LocalDateTime serviceDate;
+    @Column(nullable = false)
+    private LocalDate serviceDate;
+
+    @Column(nullable = false)
+    private Integer odometerReading;
 
     @Column(nullable = false)
     private Double cost;
 
+    @OneToMany(mappedBy = "serviceEntry")
+    private List<ServicePart> serviceParts;
+
+    @OneToMany(mappedBy = "serviceEntry")
+    private List<VerificationLog> verificationLogs;
+
     public ServiceEntry() {
     }
 
-    public ServiceEntry(Vehicle vehicle, Garage garage, String description, Double cost) {
-        this.vehicle = vehicle;
-        this.garage = garage;
-        this.description = description;
-        this.cost = cost;
-    }
+    /* ===== getters & setters required by tests ===== */
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Vehicle getVehicle() {
         return vehicle;
     }
 
-    public Garage getGarage() {
-        return garage;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public LocalDateTime getServiceDate() {
-        return serviceDate;
-    }
-
-    public Double getCost() {
-        return cost;
-    }
-
     public void setVehicle(Vehicle vehicle) {
         this.vehicle = vehicle;
+    }
+
+    public Garage getGarage() {
+        return garage;
     }
 
     public void setGarage(Garage garage) {
         this.garage = garage;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public String getServiceType() {
+        return serviceType;
+    }
+
+    public void setServiceType(String serviceType) {
+        this.serviceType = serviceType;
+    }
+
+    public LocalDate getServiceDate() {
+        return serviceDate;
+    }
+
+    public void setServiceDate(LocalDate serviceDate) {
+        this.serviceDate = serviceDate;
+    }
+
+    public Integer getOdometerReading() {
+        return odometerReading;
+    }
+
+    public void setOdometerReading(Integer odometerReading) {
+        this.odometerReading = odometerReading;
+    }
+
+    public Double getCost() {
+        return cost;
     }
 
     public void setCost(Double cost) {
