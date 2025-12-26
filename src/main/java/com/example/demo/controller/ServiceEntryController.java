@@ -2,43 +2,29 @@ package com.example.demo.controller;
 
 import com.example.demo.model.ServiceEntry;
 import com.example.demo.service.ServiceEntryService;
-import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
 @RequestMapping("/service-entries")
-@Tag(name = "Service Entry API")
 public class ServiceEntryController {
-
+    
     private final ServiceEntryService serviceEntryService;
-
+    
     public ServiceEntryController(ServiceEntryService serviceEntryService) {
         this.serviceEntryService = serviceEntryService;
     }
-
+    
     @PostMapping
-    public ServiceEntry createServiceEntry(@RequestBody ServiceEntry entry) {
-        return serviceEntryService.createServiceEntry(entry);
+    public ResponseEntity<ServiceEntry> createServiceEntry(@RequestBody ServiceEntry entry) {
+        ServiceEntry created = serviceEntryService.createServiceEntry(entry);
+        return ResponseEntity.ok(created);
     }
-
-    @GetMapping("/{id}")
-    public ServiceEntry getServiceEntryById(@PathVariable Long id) {
-        return serviceEntryService.getServiceEntryById(id);
-    }
-
+    
     @GetMapping("/vehicle/{vehicleId}")
-    public List<ServiceEntry> getEntriesForVehicle(
-            @PathVariable Long vehicleId
-    ) {
-        return serviceEntryService.getEntriesForVehicle(vehicleId);
-    }
-
-    @GetMapping("/garage/{garageId}")
-    public List<ServiceEntry> getEntriesByGarage(
-            @PathVariable Long garageId
-    ) {
-        return serviceEntryService.getEntriesByGarage(garageId);
+    public ResponseEntity<List<ServiceEntry>> getEntriesForVehicle(@PathVariable Long vehicleId) {
+        List<ServiceEntry> entries = serviceEntryService.getEntriesForVehicle(vehicleId);
+        return ResponseEntity.ok(entries);
     }
 }
