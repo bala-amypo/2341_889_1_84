@@ -1,20 +1,15 @@
 package com.example.demo.controller;
-
 import com.example.demo.model.ServiceEntry;
 import com.example.demo.service.ServiceEntryService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
-
 @RestController
 @RequestMapping("/api/service-entries")
 @Tag(name = "Service Entry Management")
 public class ServiceEntryController {
-
     private final ServiceEntryService serviceEntryService;
-
     public ServiceEntryController(ServiceEntryService serviceEntryService) {
         this.serviceEntryService = serviceEntryService;
     }
