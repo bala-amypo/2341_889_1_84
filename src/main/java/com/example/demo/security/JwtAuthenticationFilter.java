@@ -8,9 +8,10 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.Collections;
 
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
+
     private final JwtTokenProvider tokenProvider;
 
     public JwtAuthenticationFilter(JwtTokenProvider tokenProvider) {
@@ -18,16 +19,22 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     }
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+            throws ServletException, IOException {
+
         String header = request.getHeader("Authorization");
+
         if (header != null && header.startsWith("Bearer ")) {
             String token = header.substring(7);
+
             if (tokenProvider.validateToken(token)) {
                 String email = tokenProvider.getEmailFromToken(token);
-                UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(email, null, new ArrayList<>());
-                SecurityContextHolder.getContext().setAuthentication(auth);
+                UsernamePasswordAuthenticationToken authentication =
+                        new UsernamePasswordAuthenticationToken(email, null, Collections.emptyList());
+                SecurityContextHolder.getContext().setAuthentication(authentication);
             }
         }
+
         filterChain.doFilter(request, response);
     }
 }
