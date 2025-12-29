@@ -23,29 +23,23 @@ public class SecurityConfig {
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
-    @Bean
     public JwtAuthenticationFilter jwtAuthenticationFilter() {
         return new JwtAuthenticationFilter(tokenProvider);
     }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http
-               
-                .cors(cors -> {})
-                
-                
-                .csrf(csrf -> csrf.disable())
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
-          
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+
+        http
+                .csrf(csrf -> csrf.disable())
                 .sessionManagement(sm ->
                         sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
-
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
                                 "/auth/**",
@@ -54,9 +48,13 @@ public class SecurityConfig {
                                 "/swagger-ui.html",
                                 "/v3/api-docs/**"
                         ).permitAll()
+
+                        .requestMatchers("/api/verification-logs/**").hasRole("ADMIN")
+                        .requestMatchers("/api/garages/**").hasRole("ADMIN")
+
+                        .requestMatchers("/api/**").hasAnyRole("USER", "ADMIN")
                         .anyRequest().authenticated()
                 )
-
                 .addFilterBefore(
                         jwtAuthenticationFilter(),
                         UsernamePasswordAuthenticationFilter.class
