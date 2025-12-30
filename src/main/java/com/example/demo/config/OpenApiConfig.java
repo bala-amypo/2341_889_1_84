@@ -30,7 +30,7 @@ public class OpenApiConfig {
                         new SecurityRequirement().addList("bearerAuth")
                 )
                 .servers(List.of(
-                        new Server().url("")
+                        new Server().url("https://9325.pro604cr.amypo.ai/")
                 ));
     }
 }
